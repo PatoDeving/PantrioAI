@@ -61,7 +61,7 @@ const Portfolio = () => {
   return (
     <>
       <GeometricBackground />
-      <div className="min-h-screen pt-24 pb-12 px-4">
+      <div className="min-h-screen pt-24 pb-12 px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div

@@ -2,22 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom scrollbar styling */
+/* Custom scrollbar styling with new brand colors */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #0A0A0F;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #00f3ff;
+  background: #3366FF;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00d4e6;
+  background: #5C8CFF;
 }
 
 /* Global styles */
@@ -28,7 +28,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #0a0a0a;
+  background-color: #0A0A0F;
   color: white;
 }
 

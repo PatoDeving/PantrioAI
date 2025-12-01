@@ -37,7 +37,7 @@ function SpiralParticles() {
       </bufferGeometry>
       <pointsMaterial
         transparent
-        color="#bf00ff"
+        color="#7A33FF"
         size={0.03}
         sizeAttenuation={true}
         depthWrite={false}
@@ -48,14 +48,24 @@ function SpiralParticles() {
 
 const SpiralBackground = () => {
   return (
-    <div className="fixed top-0 left-0 w-full h-full -z-10">
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        pointerEvents: 'none'
+      }}
+    >
       <Canvas
         camera={{ position: [0, 0, 8], fov: 75 }}
         gl={{ antialias: false, powerPreference: 'high-performance', alpha: false }}
       >
+        <color attach="background" args={['#0A0A0F']} />
         <SpiralParticles />
       </Canvas>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark-bg/50 to-dark-bg pointer-events-none" />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import SimpleStarfield from '../components/SimpleStarfield';
-import Button from '../components/Button';
+import MagicButton from '../components/MagicButton';
 
 /**
  * Home Page - Landing page with hero section
@@ -26,14 +26,14 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.h1 
+            <motion.h1
               className="text-5xl md:text-7xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
               Welcome to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-purple">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent-1 to-accent-2">
                 Pantrio AI
               </span>
             </motion.h1>
@@ -55,12 +55,12 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              <Button onClick={() => navigate('/services')}>
-                Explore Services
-              </Button>
-              <Button variant="secondary" onClick={() => navigate('/contact')}>
+              <MagicButton onClick={() => navigate('/services')} size="lg">
+                Explore Services →
+              </MagicButton>
+              <MagicButton variant="outline" size="lg" onClick={() => navigate('/contact')}>
                 Get in Touch
-              </Button>
+              </MagicButton>
             </motion.div>
 
             {/* Animated Stats */}
@@ -77,18 +77,18 @@ const Home = () => {
               ].map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="bg-dark-card bg-opacity-50 backdrop-blur-sm border border-gray-800 rounded-xl p-6"
-                  whileHover={{ 
+                  className="bg-card bg-opacity-50 backdrop-blur-sm border border-border rounded-xl p-6"
+                  whileHover={{
                     y: -5,
-                    borderColor: '#00f3ff',
-                    boxShadow: '0 10px 30px rgba(0, 243, 255, 0.2)'
+                    borderColor: '#3366FF',
+                    boxShadow: '0 10px 30px rgba(51, 102, 255, 0.3)'
                   }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h3 className="text-4xl font-bold text-neon-blue mb-2">
+                  <h3 className="text-4xl font-bold text-primary mb-2">
                     {stat.number}
                   </h3>
-                  <p className="text-gray-400">{stat.label}</p>
+                  <p className="text-text-secondary">{stat.label}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -107,7 +107,7 @@ const Home = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            Why Choose <span className="text-neon-blue">Pantrio AI</span>?
+            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-1">Pantrio AI</span>?
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -130,22 +130,21 @@ const Home = () => {
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="bg-dark-card border border-gray-800 rounded-xl p-8 text-center"
+                className="bg-card border border-border rounded-xl p-8 text-center hover:border-primary transition-colors duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.6 }}
-                whileHover={{ 
+                whileHover={{
                   y: -10,
-                  borderColor: '#00f3ff',
-                  boxShadow: '0 10px 40px rgba(0, 243, 255, 0.2)'
+                  boxShadow: '0 10px 40px rgba(51, 102, 255, 0.3)'
                 }}
               >
                 <div className="text-6xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold mb-3 text-neon-blue">
+                <h3 className="text-xl font-bold mb-3 text-primary">
                   {feature.title}
                 </h3>
-                <p className="text-gray-400">{feature.description}</p>
+                <p className="text-text-secondary">{feature.description}</p>
               </motion.div>
             ))}
           </div>

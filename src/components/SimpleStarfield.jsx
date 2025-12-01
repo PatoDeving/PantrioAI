@@ -39,7 +39,7 @@ function StarField() {
       </bufferGeometry>
       <pointsMaterial
         size={0.1}
-        color="#00f3ff"
+        color="#3366FF"
         sizeAttenuation={true}
         transparent={true}
         opacity={0.8}
@@ -69,7 +69,7 @@ export default function SimpleStarfield() {
           powerPreference: 'high-performance'
         }}
       >
-        <color attach="background" args={['#0a0a0a']} />
+        <color attach="background" args={['#0A0A0F']} />
         <StarField />
       </Canvas>
     </div>

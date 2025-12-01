@@ -28,7 +28,7 @@ const Contact = () => {
   return (
     <>
       <NetworkBackground />
-      <div className="min-h-screen pt-24 pb-12 px-4">
+      <div className="min-h-screen pt-24 pb-12 px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-16"

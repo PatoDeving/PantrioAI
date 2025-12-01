@@ -42,7 +42,7 @@ function WaveParticles() {
       </bufferGeometry>
       <pointsMaterial
         transparent
-        color="#00f3ff"
+        color="#33CCFF"
         size={0.02}
         sizeAttenuation={true}
         depthWrite={false}
@@ -53,14 +53,24 @@ function WaveParticles() {
 
 const WaveBackground = () => {
   return (
-    <div className="fixed top-0 left-0 w-full h-full -z-10">
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        pointerEvents: 'none'
+      }}
+    >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
         gl={{ antialias: false, powerPreference: 'high-performance', alpha: false }}
       >
+        <color attach="background" args={['#0A0A0F']} />
         <WaveParticles />
       </Canvas>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark-bg/50 to-dark-bg pointer-events-none" />
     </div>
   );
 };

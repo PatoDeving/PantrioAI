@@ -41,10 +41,10 @@ function RotatingBoxes() {
       {boxes.map((box, i) => (
         <mesh key={i} position={box.position} scale={box.scale}>
           <boxGeometry args={[1, 1, 1]} />
-          <meshBasicMaterial 
-            color="#00f3ff" 
-            wireframe 
-            transparent 
+          <meshBasicMaterial
+            color="#3366FF"
+            wireframe
+            transparent
             opacity={0.3}
           />
         </mesh>
@@ -55,14 +55,24 @@ function RotatingBoxes() {
 
 const GeometricBackground = () => {
   return (
-    <div className="fixed top-0 left-0 w-full h-full -z-10">
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        pointerEvents: 'none'
+      }}
+    >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
         gl={{ antialias: false, powerPreference: 'high-performance', alpha: false }}
       >
+        <color attach="background" args={['#0A0A0F']} />
         <RotatingBoxes />
       </Canvas>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark-bg/50 to-dark-bg pointer-events-none" />
     </div>
   );
 };
