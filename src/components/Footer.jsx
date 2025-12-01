@@ -59,8 +59,8 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4 text-white">Contact</h4>
             <ul className="space-y-2 text-gray-400">
               <li>Email: info@pantrioai.com</li>
-              <li>Phone: +1 (555) 123-4567</li>
-              <li>Location: San Francisco, CA</li>
+              <li>Phone: +52 (446) 242-1428</li>
+              <li>Location: Interlomas, Edo.Mex.</li>
             </ul>
           </div>
         </div>
