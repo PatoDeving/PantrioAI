@@ -13,8 +13,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <motion.footer 
-      className="bg-dark-card border-t border-gray-800 mt-20"
+    <motion.footer
+      className="relative z-10 bg-dark-card border-t border-gray-800 mt-20"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
