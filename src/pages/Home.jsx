@@ -43,11 +43,6 @@ const Home = () => {
       description: 'Streamline your workflows with intelligent automation, CI/CD pipelines, and infrastructure as code.',
     },
     {
-      icon: '🔒',
-      title: 'Cybersecurity',
-      description: 'Comprehensive security solutions including penetration testing, security audits, and compliance management.',
-    },
-    {
       icon: '📊',
       title: 'Data Analytics',
       description: 'Turn your data into actionable insights with advanced analytics, visualization, and business intelligence.',
@@ -72,14 +67,14 @@ const Home = () => {
       <div className="min-h-screen relative z-10">
         {/* Hero Section */}
         <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="max-w-4xl mx-auto text-center pt-16">
+        <div className="max-w-4xl mx-auto text-center pt-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <motion.h1
-              className="text-5xl md:text-7xl font-bold mb-6"
+              className="text-6xl md:text-8xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
@@ -91,7 +86,7 @@ const Home = () => {
             </motion.h1>
 
             <motion.p
-              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed"
+              className="text-2xl md:text-3xl text-gray-100 mb-8 leading-relaxed font-semibold"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
@@ -101,7 +96,7 @@ const Home = () => {
             >
               Transforming businesses with cutting-edge AI solutions,
               <br />
-              innovative web development, and intelligent automation
+              innovative web development, and intelligent automation.
             </motion.p>
 
             <motion.div
@@ -190,7 +185,12 @@ const Home = () => {
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-2">Services</span>
             </h2>
-            <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+            <p
+              className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-semibold"
+              style={{
+                textShadow: '0 0 20px rgba(51, 102, 255, 0.6), 0 0 40px rgba(51, 102, 255, 0.4)'
+              }}
+            >
               Comprehensive technology solutions tailored to your business needs.
               From AI to cloud infrastructure, we've got you covered.
             </p>

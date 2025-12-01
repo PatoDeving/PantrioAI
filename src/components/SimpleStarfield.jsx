@@ -39,7 +39,7 @@ function StarField() {
       </bufferGeometry>
       <pointsMaterial
         size={0.1}
-        color="#3366FF"
+        color="#0AFFED"
         sizeAttenuation={true}
         transparent={true}
         opacity={0.8}

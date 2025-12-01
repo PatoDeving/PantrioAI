@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
  */
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const location = useLocation();
 
   const navLinks = [
@@ -23,12 +24,24 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   return (
-    <motion.nav 
-      className="fixed top-0 left-0 right-0 z-50 bg-dark-bg bg-opacity-80 backdrop-blur-lg border-b border-gray-800"
+    <motion.nav
+      className="fixed top-0 left-0 right-0 z-50 bg-dark-bg bg-opacity-80 backdrop-blur-lg border-b border-gray-800 overflow-hidden"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
+      onMouseMove={handleMouseMove}
+      style={{
+        background: `radial-gradient(circle 400px at ${mousePosition.x}px ${mousePosition.y}px, rgba(51, 102, 255, 0.08), transparent 70%), rgba(10, 10, 15, 0.8)`,
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">

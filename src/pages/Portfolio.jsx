@@ -32,6 +32,30 @@ const Portfolio = () => {
       tags: ['AWS', 'Kubernetes', 'Terraform', 'CI/CD'],
       metrics: { servers: '200+', savings: '-40%', time: '4 months' },
     },
+    {
+      title: 'UX/UI Design Platform',
+      category: 'UI/UX Design',
+      description: 'Beautiful, intuitive interface design system with user experience at the forefront of every decision.',
+      image: '🎨',
+      tags: ['Figma', 'Adobe XD', 'React', 'Tailwind CSS'],
+      metrics: { screens: '150+', rating: '4.9/5', time: '3 months' },
+    },
+    {
+      title: 'Modern Web Application',
+      category: 'Web Development',
+      description: 'Responsive web application built with cutting-edge technologies delivering exceptional performance.',
+      image: '💻',
+      tags: ['React', 'Next.js', 'Node.js', 'TypeScript'],
+      metrics: { users: '25K+', speed: '95/100', time: '4 months' },
+    },
+    {
+      title: 'AI Agent System',
+      category: 'AI & Automation',
+      description: 'Autonomous AI agents handling complex workflows and decision-making processes with minimal human intervention.',
+      image: '🤖',
+      tags: ['Python', 'LangChain', 'GPT-4', 'Azure'],
+      metrics: { tasks: '10K+/day', efficiency: '+75%', time: '5 months' },
+    },
   ];
 
   return (
@@ -49,7 +73,12 @@ const Portfolio = () => {
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Our <span className="text-primary">Portfolio</span>
           </h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p
+            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-semibold"
+            style={{
+              textShadow: '0 0 20px rgba(51, 102, 255, 0.6), 0 0 40px rgba(51, 102, 255, 0.4)'
+            }}
+          >
             Explore our successful projects and see how we've helped businesses
             transform with technology.
           </p>

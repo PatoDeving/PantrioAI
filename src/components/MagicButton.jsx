@@ -57,7 +57,7 @@ const MagicButton = ({
       bg: 'bg-transparent border-2 border-primary',
       hover: 'hover:bg-primary/10',
       glow: 'hover:shadow-glow',
-      text: 'text-primary',
+      text: 'text-white',
     },
   };
 
