@@ -34,13 +34,16 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/">
-            <motion.div 
-              className="text-2xl font-bold"
+            <motion.div
+              className="flex items-center"
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 400 }}
             >
-              <span className="text-neon-blue">Pantrio</span>
-              <span className="text-white"> AI</span>
+              <img
+                src="/logo.svg"
+                alt="Pantrio AI"
+                className="h-12 w-auto"
+              />
             </motion.div>
           </Link>
 

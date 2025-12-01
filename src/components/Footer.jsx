@@ -24,12 +24,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4">
-              <span className="text-neon-blue">Pantrio</span>
-              <span className="text-white"> AI</span>
-            </h3>
+            <div className="mb-4">
+              <img
+                src="/logo.svg"
+                alt="Pantrio AI"
+                className="h-10 w-auto"
+              />
+            </div>
             <p className="text-gray-400 mb-4">
-              Transforming businesses with cutting-edge AI solutions, web development, 
+              Transforming businesses with cutting-edge AI solutions, web development,
               and cloud automation services.
             </p>
             <div className="flex space-x-4">
