@@ -95,6 +95,9 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
+              style={{
+                textShadow: '0 0 20px rgba(51, 102, 255, 0.5), 0 0 40px rgba(51, 102, 255, 0.3)'
+              }}
             >
               Transforming businesses with cutting-edge AI solutions,
               <br />
@@ -113,36 +116,6 @@ const Home = () => {
               <MagicButton variant="outline" size="lg" onClick={scrollToServices}>
                 Explore Services
               </MagicButton>
-            </motion.div>
-
-            {/* Animated Stats */}
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-            >
-              {[
-                { number: '500+', label: 'Projects Completed' },
-                { number: '200+', label: 'Happy Clients' },
-                { number: '50+', label: 'AI Models Deployed' },
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-card bg-opacity-50 backdrop-blur-sm border border-border rounded-xl p-6"
-                  whileHover={{
-                    y: -5,
-                    borderColor: '#3366FF',
-                    boxShadow: '0 10px 30px rgba(51, 102, 255, 0.3)'
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="text-4xl font-bold text-primary mb-2">
-                    {stat.number}
-                  </h3>
-                  <p className="text-text-secondary">{stat.label}</p>
-                </motion.div>
-              ))}
             </motion.div>
           </motion.div>
         </div>

@@ -42,7 +42,7 @@ const Navbar = () => {
               <img
                 src="/logo.svg"
                 alt="Pantrio AI"
-                className="h-12 w-auto"
+                className="h-16 w-auto"
               />
             </motion.div>
           </Link>
@@ -52,16 +52,23 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path}>
                 <motion.div
-                  className={'relative px-3 py-2 text-sm font-medium transition-colors ' + (isActive(link.path) ? 'text-neon-blue' : 'text-gray-300 hover:text-white')}
-                  whileHover={{ y: -2 }}
+                  className={'relative px-3 py-2 text-sm font-medium transition-colors ' + (isActive(link.path) ? 'text-primary' : 'text-gray-300 hover:text-white')}
+                  whileHover={{
+                    y: -2,
+                    scale: 1.05,
+                    textShadow: '0 0 8px rgba(51, 102, 255, 0.8)'
+                  }}
                   transition={{ duration: 0.2 }}
                 >
                   {link.name}
                   {isActive(link.path) && (
                     <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-neon-blue"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
                       layoutId="navbar-indicator"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      style={{
+                        boxShadow: '0 0 10px rgba(51, 102, 255, 0.8)'
+                      }}
                     />
                   )}
                 </motion.div>
