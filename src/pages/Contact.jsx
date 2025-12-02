@@ -164,7 +164,7 @@ const Contact = () => {
             <div className="bg-dark-card border border-gray-800 rounded-2xl p-8">
               <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
               <div className="space-y-6">
-                <div className="flex items-start space-x-4"><div className="text-3xl">📧</div><div><h3 className="font-semibold mb-1">Email</h3><p className="text-gray-400">info@pantrioai.com</p></div></div>
+                <div className="flex items-start space-x-4"><div className="text-3xl">📧</div><div><h3 className="font-semibold mb-1">Email</h3><p className="text-gray-400">info@pantrio.dev</p></div></div>
                 <div className="flex items-start space-x-4"><div className="text-3xl">📱</div><div><h3 className="font-semibold mb-1">Phone</h3><p className="text-gray-400">+52 (446) 242-1428</p></div></div>
                 <div className="flex items-start space-x-4"><div className="text-3xl">📍</div><div><h3 className="font-semibold mb-1">Office</h3><p className="text-gray-400">Interlomas, Edo.Mex.</p></div></div>
               </div>
