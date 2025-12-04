@@ -7,20 +7,31 @@ import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Hidden1 from './pages/Hidden1';
 
 function App() {
   return (
     <Router>
       <div className="App min-h-screen bg-dark-bg text-white">
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+          {/* Hidden route - no navbar/footer/chatbot */}
+          <Route path="/hidden1" element={<Hidden1 />} />
+
+          {/* Regular routes with navbar, footer, and chatbot */}
+          <Route path="*" element={
+            <>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+              </Routes>
+              <Footer />
+              <Chatbot />
+            </>
+          } />
         </Routes>
-        <Footer />
-        <Chatbot />
       </div>
     </Router>
   );
