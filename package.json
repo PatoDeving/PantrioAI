@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@google/generative-ai": "^0.24.1",
     "@react-three/drei": "^9.88.17",
     "@react-three/fiber": "^8.15.12",
     "framer-motion": "^10.16.16",
