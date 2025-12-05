@@ -122,7 +122,7 @@ export default async (req, res) => {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-      model: process.env.GEMINI_MODEL || 'gemini-2.0-flash-exp'
+      model: process.env.GEMINI_MODEL || 'gemini-1.5-flash'
     });
 
     // Build conversation history for context
