@@ -3,13 +3,12 @@
  * Creates appointments in Google Calendar and logs to Google Sheets
  */
 
-import { google } from 'googleapis';
-
 /**
  * Initialize Google Auth client
  */
-function getGoogleAuth() {
+async function getGoogleAuth() {
   try {
+    const { google } = await import('googleapis');
     const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
 
     const auth = new google.auth.GoogleAuth({
@@ -20,7 +19,7 @@ function getGoogleAuth() {
       ],
     });
 
-    return auth;
+    return { auth, google };
   } catch (error) {
     console.error('Error initializing Google Auth:', error);
     throw new Error('Failed to initialize Google authentication');
@@ -30,7 +29,7 @@ function getGoogleAuth() {
 /**
  * Create event in Google Calendar
  */
-async function createCalendarEvent(auth, eventData) {
+async function createCalendarEvent(google, auth, eventData) {
   const calendar = google.calendar({ version: 'v3', auth });
 
   const { nombre, email, telefono, fecha, hora, notas, prototipo } = eventData;
@@ -47,19 +46,27 @@ async function createCalendarEvent(auth, eventData) {
   endDateTime.setHours(endDateTime.getHours() + 1);
 
   // Build event description
-  let description = `Cita agendada mediante Pantrio.dev - Torre de Piedra Zarú\n\n`;
-  description += `Cliente: ${nombre}\n`;
-  description += `Teléfono: ${telefono}\n`;
-  description += `Email: ${email}\n`;
+  let description = \`Cita agendada mediante Pantrio.dev - Torre de Piedra Zarú
+
+\`;
+  description += \`Cliente: \${nombre}
+\`;
+  description += \`Teléfono: \${telefono}
+\`;
+  description += \`Email: \${email}
+\`;
   if (prototipo) {
-    description += `Prototipo de interés: ${prototipo}\n`;
+    description += \`Prototipo de interés: \${prototipo}
+\`;
   }
   if (notas) {
-    description += `\nNotas adicionales:\n${notas}`;
+    description += \`
+Notas adicionales:
+\${notas}\`;
   }
 
   const event = {
-    summary: `Cita Torre de Piedra Zarú - ${nombre}`,
+    summary: \`Cita Torre de Piedra Zarú - \${nombre}\`,
     description: description,
     location: 'Torre de Piedra Zarú, Desarrollo Zarú, Querétaro, México',
     start: {
@@ -74,11 +81,11 @@ async function createCalendarEvent(auth, eventData) {
     reminders: {
       useDefault: false,
       overrides: [
-        { method: 'email', minutes: 24 * 60 }, // 1 day before
-        { method: 'popup', minutes: 60 },      // 1 hour before
+        { method: 'email', minutes: 24 * 60 },
+        { method: 'popup', minutes: 60 },
       ],
     },
-    colorId: '9', // Blue color
+    colorId: '9',
   };
 
   try {
@@ -86,7 +93,7 @@ async function createCalendarEvent(auth, eventData) {
     const response = await calendar.events.insert({
       calendarId: calendarId,
       resource: event,
-      sendUpdates: 'all', // Send email notifications
+      sendUpdates: 'all',
     });
 
     return {
@@ -103,7 +110,7 @@ async function createCalendarEvent(auth, eventData) {
 /**
  * Log appointment to Google Sheets
  */
-async function logToGoogleSheets(auth, eventData) {
+async function logToGoogleSheets(google, auth, eventData) {
   const sheets = google.sheets({ version: 'v4', auth });
 
   const { nombre, email, telefono, fecha, hora, notas, prototipo } = eventData;
@@ -112,24 +119,22 @@ async function logToGoogleSheets(auth, eventData) {
     timeZone: process.env.GOOGLE_CALENDAR_TIMEZONE || 'America/Mexico_City'
   });
 
-  // Prepare row data
   const rowData = [
-    timestamp,           // A: Fecha de registro
-    fecha,              // B: Fecha de cita
-    hora,               // C: Hora de cita
-    nombre,             // D: Nombre
-    telefono,           // E: Teléfono
-    email,              // F: Email
-    prototipo || 'N/A', // G: Prototipo de interés
-    notas || '',        // H: Notas
-    'Agente Digital',   // I: Fuente
-    'Pendiente'         // J: Estado
+    timestamp,
+    fecha,
+    hora,
+    nombre,
+    telefono,
+    email,
+    prototipo || 'N/A',
+    notas || '',
+    'Agente Digital',
+    'Pendiente'
   ];
 
   try {
     const sheetId = process.env.GOOGLE_SHEET_ID;
 
-    // First, ensure headers exist (will fail silently if they already exist)
     try {
       await sheets.spreadsheets.values.update({
         spreadsheetId: sheetId,
@@ -151,10 +156,9 @@ async function logToGoogleSheets(auth, eventData) {
         },
       });
     } catch (headerError) {
-      // Headers might already exist, continue
+      // Headers might already exist
     }
 
-    // Append the new row
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: sheetId,
       range: 'Citas!A:J',
@@ -175,16 +179,11 @@ async function logToGoogleSheets(auth, eventData) {
   }
 }
 
-/**
- * Main serverless function handler
- */
-export default async (req, res) => {
-  // Enable CORS
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Handle preflight
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -196,7 +195,6 @@ export default async (req, res) => {
   try {
     const { nombre, telefono, email, fecha, hora, notas, prototipo } = req.body;
 
-    // Validate required fields
     if (!nombre || !telefono || !email || !fecha || !hora) {
       return res.status(400).json({
         success: false,
@@ -205,7 +203,6 @@ export default async (req, res) => {
       });
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -214,7 +211,6 @@ export default async (req, res) => {
       });
     }
 
-    // Validate date format (YYYY-MM-DD)
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!dateRegex.test(fecha)) {
       return res.status(400).json({
@@ -223,7 +219,6 @@ export default async (req, res) => {
       });
     }
 
-    // Validate time format (HH:MM)
     const timeRegex = /^\d{2}:\d{2}$/;
     if (!timeRegex.test(hora)) {
       return res.status(400).json({
@@ -232,8 +227,7 @@ export default async (req, res) => {
       });
     }
 
-    // Validate date is in the future
-    const appointmentDate = new Date(`${fecha}T${hora}:00`);
+    const appointmentDate = new Date(\`\${fecha}T\${hora}:00\`);
     if (appointmentDate < new Date()) {
       return res.status(400).json({
         success: false,
@@ -241,13 +235,11 @@ export default async (req, res) => {
       });
     }
 
-    // Initialize Google Auth
-    const auth = await getGoogleAuth();
+    const { auth, google } = await getGoogleAuth();
 
-    // Create calendar event and log to sheets in parallel
     const [calendarResult, sheetsResult] = await Promise.all([
-      createCalendarEvent(auth, req.body),
-      logToGoogleSheets(auth, req.body)
+      createCalendarEvent(google, auth, req.body),
+      logToGoogleSheets(google, auth, req.body)
     ]);
 
     return res.status(200).json({
@@ -273,7 +265,6 @@ export default async (req, res) => {
   } catch (error) {
     console.error('Scheduling error:', error);
 
-    // Return appropriate error response
     if (error.message.includes('authentication')) {
       return res.status(500).json({
         success: false,
@@ -288,4 +279,4 @@ export default async (req, res) => {
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
-};
+}

@@ -2,7 +2,6 @@
   "name": "pantrio-api",
   "version": "1.0.0",
   "description": "Serverless API functions for Torre de Piedra Zarú agent",
-  "type": "module",
   "private": true,
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

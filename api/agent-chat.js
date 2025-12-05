@@ -3,8 +3,6 @@
  * Handles conversation with Gemini AI for Torre de Piedra Zarú assistant
  */
 
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
 // Torre de Piedra Zarú Knowledge Base
 const TORRE_PIEDRA_CONTEXT = `Eres el asistente digital oficial de Pantrio.dev, especializado en el desarrollo inmobiliario "Torre de Piedra Zarú" de Vialli.
 
@@ -91,7 +89,7 @@ INSTRUCCIONES DE COMPORTAMIENTO:
 8. NO inventes información que no esté en este contexto
 9. Si no sabes algo, di: "Esa información específica la tienen nuestros asesores. ¿Te gustaría agendar una cita para que puedan atenderte personalmente?"`;
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -113,12 +111,15 @@ export default async (req, res) => {
       return res.status(400).json({ error: 'Invalid message' });
     }
 
-    // Initialize Gemini AI
+    // Initialize Gemini AI using dynamic import
     const apiKey = process.env.GEMINI_API_KEY || process.env.REACT_APP_GEMINI_API_KEY;
     if (!apiKey) {
       console.error('Missing GEMINI_API_KEY');
       return res.status(500).json({ error: 'AI service not configured' });
     }
+
+    // Dynamic import for ESM package
+    const { GoogleGenerativeAI } = await import('@google/generative-ai');
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
@@ -193,4 +194,4 @@ export default async (req, res) => {
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
-};
+}
