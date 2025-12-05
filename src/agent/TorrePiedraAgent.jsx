@@ -346,9 +346,11 @@ const TorrePiedraAgent = () => {
                   min={getTodayDate()}
                   max={getMaxDate()}
                   required
-                  className="w-full bg-card border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary transition-colors"
+                  onKeyDown={(e) => e.preventDefault()}
+                  className="w-full bg-card border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary transition-colors cursor-pointer"
+                  style={{ userSelect: 'none' }}
                 />
-                <p className="text-xs text-text-secondary mt-1 ml-1">Disponible hasta {getMaxDate()}</p>
+                <p className="text-xs text-text-secondary mt-1 ml-1">Selecciona del calendario (hasta {getMaxDate()})</p>
               </div>
               <div>
                 <label className="block text-xs text-text-secondary mb-1 ml-1">Hora *</label>
