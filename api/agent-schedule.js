@@ -3,7 +3,7 @@
  * Creates appointments in Google Calendar and logs to Google Sheets
  */
 
-const { google } = require('googleapis');
+import { google } from 'googleapis';
 
 /**
  * Initialize Google Auth client
@@ -178,7 +178,7 @@ async function logToGoogleSheets(auth, eventData) {
 /**
  * Main serverless function handler
  */
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');

@@ -3,7 +3,7 @@
  * Handles conversation with Gemini AI for Torre de Piedra Zarú assistant
  */
 
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Torre de Piedra Zarú Knowledge Base
 const TORRE_PIEDRA_CONTEXT = `Eres el asistente digital oficial de Pantrio.dev, especializado en el desarrollo inmobiliario "Torre de Piedra Zarú" de Vialli.
@@ -91,7 +91,7 @@ INSTRUCCIONES DE COMPORTAMIENTO:
 8. NO inventes información que no esté en este contexto
 9. Si no sabes algo, di: "Esa información específica la tienen nuestros asesores. ¿Te gustaría agendar una cita para que puedan atenderte personalmente?"`;
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
