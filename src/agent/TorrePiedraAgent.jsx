@@ -121,6 +121,22 @@ const TorrePiedraAgent = () => {
 
   const handleScheduleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate all required fields are filled
+    if (!scheduleData.nombre || !scheduleData.telefono || !scheduleData.email ||
+        !scheduleData.fecha || !scheduleData.hora) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: 'bot',
+          text: 'Por favor, completa todos los campos requeridos del formulario antes de enviar.',
+          timestamp: new Date(),
+          isError: true,
+        },
+      ]);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -133,9 +149,18 @@ const TorrePiedraAgent = () => {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Schedule API error:', errorText);
-        throw new Error(`Error del servidor (${response.status})`);
+        let errorMessage = `Error del servidor (${response.status})`;
+        try {
+          const errorData = await response.json();
+          if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+          console.error('Schedule API error:', errorData);
+        } catch {
+          const errorText = await response.text();
+          console.error('Schedule API error (text):', errorText);
+        }
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
