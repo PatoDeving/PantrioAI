@@ -10,6 +10,7 @@ const TorrePiedraAgent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showScheduleForm, setShowScheduleForm] = useState(false);
   const [conversationEnded, setConversationEnded] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
   const [scheduleData, setScheduleData] = useState({
     nombre: '',
     telefono: '',
@@ -85,11 +86,6 @@ const TorrePiedraAgent = () => {
 
       setMessages((prev) => [...prev, botMessage]);
 
-      // Show schedule button if AI suggests it
-      if (data.showScheduleButton) {
-        setShowScheduleForm(true);
-      }
-
       // End conversation if detected
       if (data.conversationEnded) {
         setConversationEnded(true);
@@ -148,22 +144,24 @@ const TorrePiedraAgent = () => {
         body: JSON.stringify(scheduleData),
       });
 
-      if (!response.ok) {
-        let errorMessage = `Error del servidor (${response.status})`;
-        try {
-          const errorData = await response.json();
-          if (errorData.error) {
-            errorMessage = errorData.error;
-          }
-          console.error('Schedule API error:', errorData);
-        } catch {
-          const errorText = await response.text();
-          console.error('Schedule API error (text):', errorText);
-        }
-        throw new Error(errorMessage);
+      const responseText = await response.text();
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse response as JSON:', parseError);
+        console.error('Response text:', responseText);
+        throw new Error('Error de servidor: respuesta inválida');
       }
 
-      const data = await response.json();
+      if (!response.ok) {
+        let errorMessage = `Error del servidor (${response.status})`;
+        if (data.error) {
+          errorMessage = data.error;
+        }
+        console.error('Schedule API error:', data);
+        throw new Error(errorMessage);
+      }
 
       if (!data.success) {
         throw new Error(data.error || 'Error al agendar');
@@ -236,6 +234,30 @@ const TorrePiedraAgent = () => {
     return `${year}-${month}-${day}`;
   };
 
+  // Generate available dates for next 2 weeks
+  const getAvailableDates = () => {
+    const dates = [];
+    const today = new Date();
+
+    for (let i = 0; i < 14; i++) {
+      const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const dateStr = `${year}-${month}-${day}`;
+
+      dates.push({
+        dateStr,
+        dayNum: date.getDate(),
+        dayName: date.toLocaleDateString('es-MX', { weekday: 'short' }),
+        monthName: date.toLocaleDateString('es-MX', { month: 'short' }),
+        fullDate: date.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      });
+    }
+
+    return dates;
+  };
+
   // Available hours (9am to 6pm)
   const availableHours = [
     '09:00', '10:00', '11:00', '12:00', '13:00', '14:00',
@@ -306,26 +328,73 @@ const TorrePiedraAgent = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Schedule Form */}
-      {showScheduleForm && !conversationEnded && (
-        <div className="bg-surface border-t-2 border-primary p-4 shadow-lg">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-primary flex items-center gap-2">
+      {/* Input Area */}
+      <div className="bg-surface border-t border-border p-4">
+        {conversationEnded ? (
+          <div className="text-center">
+            <p className="text-text-secondary text-sm mb-3">
+              Conversación finalizada. ¡Gracias por tu interés!
+            </p>
+            <button
+              onClick={() => {
+                setMessages([{
+                  type: 'bot',
+                  text: 'Hola, soy el asistente digital de Pantrio.dev, diseñado para brindarte reportes del desarrollo Torre de Piedra Zarú de Vialli y ayudarte a agendar citas. ¿En qué puedo ayudarte hoy?',
+                  timestamp: new Date(),
+                }]);
+                setConversationEnded(false);
+                setShowScheduleForm(false);
+              }}
+              className="bg-primary hover:bg-primary-dark text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+            >
+              Nueva Conversación
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <form onSubmit={handleSendMessage} className="flex gap-2">
+              <input
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder="Escribe tu mensaje..."
+                disabled={isLoading}
+                className="flex-1 bg-card border border-border rounded-lg px-4 py-2.5 text-white placeholder-text-secondary focus:outline-none focus:border-primary transition-colors disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                disabled={isLoading || !inputMessage.trim()}
+                className="bg-primary hover:bg-primary-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              </button>
+            </form>
+
+            {/* Appointment Button - Always Visible */}
+            <button
+              onClick={() => setShowScheduleForm(!showScheduleForm)}
+              className="w-full bg-gradient-to-r from-primary to-accent-2 hover:from-primary-dark hover:to-accent-2/80 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center gap-2"
+            >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              Agendar Cita
-            </h3>
-            <button
-              onClick={() => setShowScheduleForm(false)}
-              className="text-text-secondary hover:text-white transition-colors"
-              title="Cerrar formulario"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              {showScheduleForm ? 'Cerrar Formulario' : 'Agendar Cita'}
             </button>
           </div>
+        )}
+      </div>
+
+      {/* Schedule Form - Appears Below Input */}
+      {showScheduleForm && !conversationEnded && (
+        <div className="bg-surface border-t-2 border-primary p-4 shadow-lg">
+          <h3 className="text-lg font-semibold text-primary flex items-center gap-2 mb-4">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Formulario de Cita
+          </h3>
 
           <form onSubmit={handleScheduleSubmit} className="space-y-3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -336,6 +405,7 @@ const TorrePiedraAgent = () => {
                 value={scheduleData.nombre}
                 onChange={handleScheduleFormChange}
                 required
+                title="Por favor, ingresa tu nombre completo"
                 className="bg-card border border-border rounded-lg px-4 py-2.5 text-white placeholder-text-secondary focus:outline-none focus:border-primary transition-colors"
               />
               <input
@@ -346,6 +416,7 @@ const TorrePiedraAgent = () => {
                 onChange={handleScheduleFormChange}
                 pattern="[0-9]{10}"
                 required
+                title="Por favor, ingresa un número de teléfono válido de 10 dígitos"
                 className="bg-card border border-border rounded-lg px-4 py-2.5 text-white placeholder-text-secondary focus:outline-none focus:border-primary transition-colors"
               />
             </div>
@@ -357,25 +428,54 @@ const TorrePiedraAgent = () => {
               value={scheduleData.email}
               onChange={handleScheduleFormChange}
               required
+              title="Por favor, ingresa un correo electrónico válido"
               className="w-full bg-card border border-border rounded-lg px-4 py-2.5 text-white placeholder-text-secondary focus:outline-none focus:border-primary transition-colors"
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div>
+              <div className="relative">
                 <label className="block text-xs text-text-secondary mb-1 ml-1">Fecha de cita *</label>
-                <input
-                  type="date"
-                  name="fecha"
-                  value={scheduleData.fecha}
-                  onChange={handleScheduleFormChange}
-                  min={getTodayDate()}
-                  max={getMaxDate()}
-                  required
-                  onKeyDown={(e) => e.preventDefault()}
-                  className="w-full bg-card border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary transition-colors cursor-pointer"
-                  style={{ userSelect: 'none' }}
-                />
-                <p className="text-xs text-text-secondary mt-1 ml-1">Selecciona del calendario (hasta {getMaxDate()})</p>
+                <button
+                  type="button"
+                  onClick={() => setShowCalendar(!showCalendar)}
+                  className="w-full bg-card border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary transition-colors text-left flex items-center justify-between"
+                >
+                  <span className={scheduleData.fecha ? 'text-white' : 'text-text-secondary'}>
+                    {scheduleData.fecha ?
+                      new Date(scheduleData.fecha + 'T00:00:00').toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+                      : 'Selecciona una fecha'}
+                  </span>
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </button>
+
+                {/* Calendar Dropdown */}
+                {showCalendar && (
+                  <div className="absolute z-10 mt-1 w-full bg-card border border-primary rounded-lg shadow-lg p-3 max-h-60 overflow-y-auto">
+                    <div className="grid grid-cols-2 gap-2">
+                      {getAvailableDates().map((dateObj) => (
+                        <button
+                          key={dateObj.dateStr}
+                          type="button"
+                          onClick={() => {
+                            setScheduleData((prev) => ({ ...prev, fecha: dateObj.dateStr }));
+                            setShowCalendar(false);
+                          }}
+                          className={`p-2 rounded-lg text-left transition-colors ${
+                            scheduleData.fecha === dateObj.dateStr
+                              ? 'bg-primary text-white'
+                              : 'bg-surface hover:bg-primary/20 text-white'
+                          }`}
+                        >
+                          <div className="text-xs text-text-secondary">{dateObj.dayName}</div>
+                          <div className="text-lg font-bold">{dateObj.dayNum}</div>
+                          <div className="text-xs">{dateObj.monthName}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <div>
                 <label className="block text-xs text-text-secondary mb-1 ml-1">Hora *</label>
@@ -422,58 +522,13 @@ const TorrePiedraAgent = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-glow hover:shadow-glow-lg transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isLoading ? 'Agendando...' : 'Confirmar Cita'}
             </button>
           </form>
         </div>
       )}
-
-      {/* Input Area */}
-      <div className="bg-surface border-t border-border p-4">
-        {conversationEnded ? (
-          <div className="text-center">
-            <p className="text-text-secondary text-sm mb-3">
-              Conversación finalizada. ¡Gracias por tu interés!
-            </p>
-            <button
-              onClick={() => {
-                setMessages([{
-                  type: 'bot',
-                  text: 'Hola, soy el asistente digital de Pantrio.dev, diseñado para brindarte reportes del desarrollo Torre de Piedra Zarú de Vialli y ayudarte a agendar citas. ¿En qué puedo ayudarte hoy?',
-                  timestamp: new Date(),
-                }]);
-                setConversationEnded(false);
-                setShowScheduleForm(false);
-              }}
-              className="bg-primary hover:bg-primary-dark text-white font-semibold py-2 px-6 rounded-lg transition-colors"
-            >
-              Nueva Conversación
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSendMessage} className="flex gap-2">
-            <input
-              type="text"
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              placeholder="Escribe tu mensaje..."
-              disabled={isLoading}
-              className="flex-1 bg-card border border-border rounded-lg px-4 py-2.5 text-white placeholder-text-secondary focus:outline-none focus:border-primary transition-colors disabled:opacity-50"
-            />
-            <button
-              type="submit"
-              disabled={isLoading || !inputMessage.trim()}
-              className="bg-primary hover:bg-primary-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
-            </button>
-          </form>
-        )}
-      </div>
     </div>
   );
 };

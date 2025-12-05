@@ -8,6 +8,11 @@
  */
 async function getGoogleAuth() {
   try {
+    // Check if credentials exist
+    if (!process.env.GOOGLE_CREDENTIALS_JSON) {
+      throw new Error('GOOGLE_CREDENTIALS_JSON environment variable is not set');
+    }
+
     const { google } = await import('googleapis');
     const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
 
@@ -22,7 +27,12 @@ async function getGoogleAuth() {
     return { auth, google };
   } catch (error) {
     console.error('Error initializing Google Auth:', error);
-    throw new Error('Failed to initialize Google authentication');
+    console.error('Error details:', {
+      hasCredentials: !!process.env.GOOGLE_CREDENTIALS_JSON,
+      errorMessage: error.message,
+      errorStack: error.stack
+    });
+    throw new Error(`Failed to initialize Google authentication: ${error.message}`);
   }
 }
 
@@ -180,19 +190,21 @@ async function logToGoogleSheets(google, auth, eventData) {
 }
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
   try {
+    // Set JSON content type first
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      return res.status(200).end();
+    }
+
+    if (req.method !== 'POST') {
+      return res.status(405).json({ success: false, error: 'Method not allowed' });
+    }
+
     const { nombre, telefono, email, fecha, hora, notas, prototipo } = req.body;
 
     if (!nombre || !telefono || !email || !fecha || !hora) {
@@ -264,19 +276,45 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Scheduling error:', error);
+    console.error('Error stack:', error.stack);
 
-    if (error.message.includes('authentication')) {
-      return res.status(500).json({
-        success: false,
-        error: 'Error de autenticación con Google',
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
-      });
-    }
-
-    return res.status(500).json({
+    // Ensure we always return valid JSON
+    const errorResponse = {
       success: false,
       error: 'Error al agendar la cita',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
+      message: error.message || 'Error desconocido',
+      details: process.env.NODE_ENV === 'development' ? {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      } : undefined
+    };
+
+    if (error.message && error.message.includes('authentication')) {
+      errorResponse.error = 'Error de autenticación con Google';
+    }
+
+    if (error.message && error.message.includes('GOOGLE_CREDENTIALS_JSON')) {
+      errorResponse.error = 'Configuración de Google incompleta';
+    }
+
+    return res.status(500).json(errorResponse);
+  } catch (criticalError) {
+    // This catches any error that happens before we can even process the request
+    console.error('CRITICAL ERROR in handler:', criticalError);
+
+    try {
+      res.setHeader('Content-Type', 'application/json');
+      return res.status(500).json({
+        success: false,
+        error: 'Error crítico del servidor',
+        message: criticalError.message || 'Error desconocido',
+        type: 'critical'
+      });
+    } catch (finalError) {
+      // Last resort - if we can't even set headers
+      console.error('FINAL ERROR:', finalError);
+      return res.status(500).send('{"success":false,"error":"Error crítico del servidor"}');
+    }
   }
 }
