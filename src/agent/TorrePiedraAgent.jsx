@@ -215,25 +215,6 @@ const TorrePiedraAgent = () => {
     }
   };
 
-  // Get today's date in YYYY-MM-DD format for min date
-  const getTodayDate = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  // Get max date (2 weeks from today)
-  const getMaxDate = () => {
-    const today = new Date();
-    const twoWeeksLater = new Date(today.getTime() + (14 * 24 * 60 * 60 * 1000));
-    const year = twoWeeksLater.getFullYear();
-    const month = String(twoWeeksLater.getMonth() + 1).padStart(2, '0');
-    const day = String(twoWeeksLater.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
   // Generate available dates for next 2 weeks
   const getAvailableDates = () => {
     const dates = [];
