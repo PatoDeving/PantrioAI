@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SecretAgentWidget from '../agent/SecretAgentWidget';
+import TorrePiedraAgent from '../agent/TorrePiedraAgent';
 
 const Hidden1 = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,7 +22,7 @@ const Hidden1 = () => {
 
   // Si está autenticado, mostrar el chatbot
   if (isAuthenticated) {
-    return <SecretAgentWidget />;
+    return <TorrePiedraAgent />;
   }
 
   // Mostrar el formulario de autenticación
