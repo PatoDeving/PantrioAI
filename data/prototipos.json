@@ -1,0 +1,184 @@
+{
+  "prototipos": [
+    {
+      "id": "magnolia",
+      "nombre": "Magnolia",
+      "tipo": "Casa",
+      "construccion_m2": 141,
+      "recamaras": 4,
+      "banos": 3,
+      "banos_completos": 3,
+      "medios_banos": 0,
+      "niveles": 2,
+      "estacionamiento": 2,
+      "descripcion": "Planta baja: sala, comedor, cocina equipada, área de lavado interior, baño completo, recámara con clóset, bodega interior, jardín, 2 cajones de estacionamiento, pórtico. Planta alta: recámara principal con walk-in clóset, baño y balcón; dos recámaras secundarias con clóset y balcón; baño completo; family room.",
+      "planta_baja": {
+        "espacios": [
+          "Sala",
+          "Comedor",
+          "Cocina equipada",
+          "Área de lavado interior",
+          "Baño completo",
+          "Cuarta recámara con clóset",
+          "Bodega interior",
+          "Jardín",
+          "Pórtico de bienvenida"
+        ]
+      },
+      "planta_alta": {
+        "espacios": [
+          "Recámara principal con walk-in clóset, baño completo y balcón",
+          "Dos recámaras secundarias con clóset y balcón",
+          "Baño completo",
+          "Family room"
+        ]
+      },
+      "caracteristicas_destacadas": [
+        "4 recámaras amplias",
+        "Walk-in clóset en recámara principal",
+        "Family room para entretenimiento",
+        "Bodega interior",
+        "Jardín privado",
+        "Múltiples balcones"
+      ],
+      "ideal_para": [
+        "Familias grandes",
+        "Quienes buscan espacio extra",
+        "Necesitan 4 recámaras",
+        "Valoran el almacenamiento"
+      ]
+    },
+    {
+      "id": "orquidea",
+      "nombre": "Orquídea",
+      "tipo": "Casa",
+      "construccion_m2": 108,
+      "recamaras": 3,
+      "banos": 2,
+      "banos_completos": 2,
+      "medios_banos": 1,
+      "niveles": 2,
+      "estacionamiento": 2,
+      "descripcion": "Planta baja: sala, comedor, cocina equipada, área de lavado interior, medio baño, jardín, 2 cajones. Planta alta: recámara principal con 2 clósets, baño y balcón; dos recámaras secundarias con clóset y balcón; baño completo; zona flex.",
+      "planta_baja": {
+        "espacios": [
+          "Sala",
+          "Comedor",
+          "Cocina equipada",
+          "Área de lavado interior",
+          "Medio baño",
+          "Jardín"
+        ]
+      },
+      "planta_alta": {
+        "espacios": [
+          "Recámara principal con 2 clósets, baño completo y balcón",
+          "Dos recámaras secundarias con clóset y balcón",
+          "Baño completo",
+          "Zona flex"
+        ]
+      },
+      "caracteristicas_destacadas": [
+        "Diseño compacto y funcional",
+        "Zona flex versátil",
+        "Jardín privado",
+        "Doble clóset en recámara principal",
+        "Balcones en todas las recámaras"
+      ],
+      "ideal_para": [
+        "Familias pequeñas o medianas",
+        "Quienes buscan funcionalidad",
+        "Necesitan 3 recámaras",
+        "Buscan casa accesible"
+      ]
+    },
+    {
+      "id": "lirio",
+      "nombre": "Lirio",
+      "tipo": "Cuádruplex",
+      "construccion_m2_planta_alta": 85,
+      "construccion_m2_planta_baja": 79,
+      "construccion_m2_total": 164,
+      "recamaras": 2,
+      "banos": 2,
+      "banos_completos": 2,
+      "medios_banos": 0,
+      "niveles": 2,
+      "estacionamiento": 2,
+      "descripcion": "Sala, comedor, cocina equipada, área de lavado interior, recámara principal con baño completo, recámara secundaria, baño completo, jardín (PB), balcones (PA), 2 cajones de estacionamiento.",
+      "distribucion": {
+        "espacios_principales": [
+          "Sala",
+          "Comedor",
+          "Cocina equipada",
+          "Área de lavado interior",
+          "Recámara principal con clóset y baño completo",
+          "Recámara secundaria con clóset",
+          "Baño completo"
+        ],
+        "espacios_exteriores": [
+          "Jardín con terraza en planta baja",
+          "Balcones en planta alta"
+        ]
+      },
+      "caracteristicas_destacadas": [
+        "2 cajones de estacionamiento",
+        "Jardín privado con terraza",
+        "Cuádruplex (4 unidades por edificio)",
+        "Balcones amplios",
+        "Diseño de dos niveles"
+      ],
+      "ideal_para": [
+        "Parejas o familias pequeñas",
+        "Quienes prefieren departamentos",
+        "Buscan privacidad (pocas unidades)",
+        "Desean espacios exteriores"
+      ]
+    },
+    {
+      "id": "dalia",
+      "nombre": "Dalia",
+      "tipo": "Séxtuplex",
+      "construccion_m2_planta_alta": 86,
+      "construccion_m2_planta_media": 85,
+      "construccion_m2_planta_baja": 79,
+      "construccion_m2_total": 250,
+      "recamaras": 2,
+      "banos": 2,
+      "banos_completos": 2,
+      "medios_banos": 0,
+      "niveles": 3,
+      "estacionamiento_pb_pm": 2,
+      "estacionamiento_pa": 1,
+      "descripcion": "Sala, comedor, cocina equipada, área de lavado interior, recámara principal con baño completo, recámara secundaria, baño completo, jardín (PB), balcones (PA), estacionamiento según nivel.",
+      "distribucion": {
+        "espacios_principales": [
+          "Sala",
+          "Comedor",
+          "Cocina equipada",
+          "Área de lavado interior",
+          "Recámara principal con clóset y baño completo",
+          "Recámara secundaria con clóset",
+          "Baño completo"
+        ],
+        "espacios_exteriores": [
+          "Jardín con terraza en planta baja",
+          "Balcones en planta alta"
+        ]
+      },
+      "caracteristicas_destacadas": [
+        "Hasta 2 cajones de estacionamiento (según planta)",
+        "Jardín privado con terraza (PB)",
+        "Séxtuplex (6 unidades por edificio)",
+        "Balcones en planta alta",
+        "Mayor disponibilidad de unidades"
+      ],
+      "ideal_para": [
+        "Parejas o familias pequeñas",
+        "Quienes prefieren departamentos",
+        "Buscan mayor disponibilidad",
+        "Flexibilidad en elección de planta"
+      ]
+    }
+  ]
+}

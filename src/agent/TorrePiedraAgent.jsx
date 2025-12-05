@@ -33,7 +33,7 @@ const TorrePiedraAgent = () => {
   useEffect(() => {
     const welcomeMessage = {
       type: 'bot',
-      text: 'Hola, soy el asistente digital de Pantrio.dev, diseñado para brindarte reportes del desarrollo Torre de Piedra Zarú de Vialli y ayudarte a agendar citas. ¿En qué puedo ayudarte hoy?',
+      text: 'Hola, soy el asistente digital de Pantrio.dev, diseñado para brindarte informes del desarrollo Torre de Piedra Zarú de Vialli y ayudarte a agendar citas. ¿En qué puedo ayudarte hoy?',
       timestamp: new Date(),
     };
     setMessages([welcomeMessage]);
@@ -132,6 +132,12 @@ const TorrePiedraAgent = () => {
         body: JSON.stringify(scheduleData),
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Schedule API error:', errorText);
+        throw new Error(`Error del servidor (${response.status})`);
+      }
+
       const data = await response.json();
 
       if (!data.success) {
@@ -194,6 +200,22 @@ const TorrePiedraAgent = () => {
     const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
+
+  // Get max date (2 weeks from today)
+  const getMaxDate = () => {
+    const today = new Date();
+    const twoWeeksLater = new Date(today.getTime() + (14 * 24 * 60 * 60 * 1000));
+    const year = twoWeeksLater.getFullYear();
+    const month = String(twoWeeksLater.getMonth() + 1).padStart(2, '0');
+    const day = String(twoWeeksLater.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  // Available hours (9am to 6pm)
+  const availableHours = [
+    '09:00', '10:00', '11:00', '12:00', '13:00', '14:00',
+    '15:00', '16:00', '17:00', '18:00'
+  ];
 
   return (
     <div className="flex flex-col h-screen bg-bg-dark text-white">
@@ -322,22 +344,29 @@ const TorrePiedraAgent = () => {
                   value={scheduleData.fecha}
                   onChange={handleScheduleFormChange}
                   min={getTodayDate()}
+                  max={getMaxDate()}
                   required
                   className="w-full bg-card border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary transition-colors"
                 />
+                <p className="text-xs text-text-secondary mt-1 ml-1">Disponible hasta {getMaxDate()}</p>
               </div>
               <div>
                 <label className="block text-xs text-text-secondary mb-1 ml-1">Hora *</label>
-                <input
-                  type="time"
+                <select
                   name="hora"
                   value={scheduleData.hora}
                   onChange={handleScheduleFormChange}
-                  min="09:00"
-                  max="18:00"
                   required
                   className="w-full bg-card border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary transition-colors"
-                />
+                >
+                  <option value="">Selecciona una hora</option>
+                  {availableHours.map((hour) => (
+                    <option key={hour} value={hour}>
+                      {hour}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-text-secondary mt-1 ml-1">Horario: 9:00 AM - 6:00 PM</p>
               </div>
             </div>
 

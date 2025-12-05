@@ -1,0 +1,16 @@
+# Requirements para Vercel Serverless Functions
+# Torre de Piedra Zarú - Backend Python
+
+# Google Gemini AI
+google-generativeai
+
+# Google APIs (Calendar & Sheets)
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+gspread
+
+# Utilidades
+python-dateutil
+pytz

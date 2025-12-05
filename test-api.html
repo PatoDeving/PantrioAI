@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API - Torre de Piedra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        button {
+            background: #00f3ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover {
+            background: #00d4e6;
+        }
+        .result {
+            background: #000;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success { border-left: 4px solid #0f0; }
+        .error { border-left: 4px solid #f00; }
+        h1 { color: #00f3ff; }
+        h2 { color: #bf00ff; }
+    </style>
+</head>
+<body>
+    <h1>🧪 API Test - Torre de Piedra Zarú</h1>
+    <p>Use this page to test if your backend API is working correctly on Vercel.</p>
+
+    <div class="test-section">
+        <h2>1. Test Chat Endpoint</h2>
+        <button onclick="testChat()">Test /api/chat</button>
+        <div id="chat-result" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test Prototipos Endpoint</h2>
+        <button onclick="testPrototipos()">Test /api/prototipos</button>
+        <div id="prototipos-result" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test Horarios Endpoint</h2>
+        <button onclick="testHorarios()">Test /api/horarios</button>
+        <div id="horarios-result" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Test Full Flow</h2>
+        <button onclick="testFullFlow()">Test Chat + Schedule</button>
+        <div id="flow-result" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+
+        async function testChat() {
+            const resultDiv = document.getElementById('chat-result');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Testing...\n';
+            resultDiv.className = 'result';
+
+            try {
+                const response = await fetch(`${API_BASE}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        mensaje: 'Hola, ¿qué prototipos tienen disponibles?',
+                        user_id: 'test_user'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✅ SUCCESS!\n\n' +
+                        'Status: ' + response.status + '\n' +
+                        'Response:\n' + JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ ERROR!\n\n' +
+                        'Status: ' + response.status + '\n' +
+                        'Response:\n' + JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '❌ NETWORK ERROR!\n\n' + error.message;
+            }
+        }
+
+        async function testPrototipos() {
+            const resultDiv = document.getElementById('prototipos-result');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Testing...\n';
+            resultDiv.className = 'result';
+
+            try {
+                const response = await fetch(`${API_BASE}/prototipos`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✅ SUCCESS!\n\n' +
+                        'Status: ' + response.status + '\n' +
+                        'Prototipos found: ' + (data.prototipos?.length || 0) + '\n\n' +
+                        JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ ERROR!\n\n' +
+                        'Status: ' + response.status + '\n' +
+                        JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '❌ NETWORK ERROR!\n\n' + error.message;
+            }
+        }
+
+        async function testHorarios() {
+            const resultDiv = document.getElementById('horarios-result');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Testing...\n';
+            resultDiv.className = 'result';
+
+            // Get tomorrow's date
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const fecha = tomorrow.toISOString().split('T')[0];
+
+            try {
+                const response = await fetch(`${API_BASE}/horarios?fecha=${fecha}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✅ SUCCESS!\n\n' +
+                        'Status: ' + response.status + '\n' +
+                        'Date tested: ' + fecha + '\n' +
+                        'Available slots: ' + (data.horarios_disponibles?.length || 0) + '\n\n' +
+                        JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ ERROR!\n\n' +
+                        'Status: ' + response.status + '\n' +
+                        JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '❌ NETWORK ERROR!\n\n' + error.message;
+            }
+        }
+
+        async function testFullFlow() {
+            const resultDiv = document.getElementById('flow-result');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result';
+            let log = '';
+
+            try {
+                // Step 1: Chat
+                log += '📝 Step 1: Testing chat...\n';
+                const chatResponse = await fetch(`${API_BASE}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        mensaje: 'Quiero agendar una cita',
+                        user_id: 'test_flow_user'
+                    })
+                });
+                const chatData = await chatResponse.json();
+
+                if (!chatResponse.ok) {
+                    throw new Error('Chat failed: ' + chatResponse.status);
+                }
+
+                log += '✅ Chat working!\n';
+                log += 'Bot said: ' + chatData.respuesta.substring(0, 100) + '...\n\n';
+
+                // Step 2: Get horarios
+                log += '📅 Step 2: Getting available times...\n';
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const fecha = tomorrow.toISOString().split('T')[0];
+
+                const horariosResponse = await fetch(`${API_BASE}/horarios?fecha=${fecha}`);
+                const horariosData = await horariosResponse.json();
+
+                if (!horariosResponse.ok) {
+                    throw new Error('Horarios failed: ' + horariosResponse.status);
+                }
+
+                log += '✅ Horarios working!\n';
+                log += 'Available slots: ' + (horariosData.horarios_disponibles?.length || 0) + '\n\n';
+
+                // Success
+                resultDiv.className = 'result success';
+                resultDiv.textContent = log + '\n🎉 ALL TESTS PASSED!\n\nYour API is working correctly on Vercel!';
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = log + '\n\n❌ TEST FAILED!\n\n' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
