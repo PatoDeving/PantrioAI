@@ -123,7 +123,7 @@ export default async function handler(req, res) {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-      model: process.env.GEMINI_MODEL || 'gemini-pro'
+      model: process.env.GEMINI_MODEL || 'gemini-2.0-flash'
     });
 
     // Build conversation history for context
