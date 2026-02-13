@@ -1,6 +1,7 @@
 {
   "name": "pantrio-api",
   "version": "1.0.0",
+  "type": "module",
   "description": "Serverless API functions for Torre de Piedra Zarú agent",
   "private": true,
   "dependencies": {
