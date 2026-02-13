@@ -2,9 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import MagicButton from '../components/MagicButton';
+import { useLanguage } from '../context/LanguageContext';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const scrollToServices = () => {
     const servicesSection = document.getElementById('services-section');
@@ -16,56 +18,80 @@ const Home = () => {
   // Bento grid services - varying sizes for visual interest
   const bentoServices = [
     {
-      icon: '🤖',
-      title: 'AI & Machine Learning',
-      description: 'Custom AI solutions, natural language processing, computer vision, and predictive analytics to transform your business operations.',
+      icon: '\uD83E\uDD16',
+      title: t('AI & Machine Learning', 'IA y aprendizaje autom\u00e1tico'),
+      description: t(
+        'Custom AI solutions, natural language processing, computer vision, and predictive analytics to transform your business operations.',
+        'Soluciones de IA a medida: procesamiento de lenguaje natural, visi\u00f3n por computadora y an\u00e1lisis predictivo para transformar tu operaci\u00f3n.'
+      ),
       span: 'md:col-span-2 md:row-span-2',
       featured: true,
     },
     {
-      icon: '💻',
-      title: 'Web Development',
-      description: 'Modern, responsive websites built with React, Next.js, and Node.js.',
+      icon: '\uD83D\uDCBB',
+      title: t('Web Development', 'Desarrollo web'),
+      description: t(
+        'Modern, responsive websites built with React, Next.js, and Node.js.',
+        'Sitios web modernos y responsivos con React, Next.js y Node.js.'
+      ),
       span: '',
     },
     {
-      icon: '📱',
-      title: 'Mobile Development',
-      description: 'Native and cross-platform apps for iOS and Android.',
+      icon: '\uD83D\uDCF1',
+      title: t('Mobile Development', 'Desarrollo m\u00f3vil'),
+      description: t(
+        'Native and cross-platform apps for iOS and Android.',
+        'Aplicaciones nativas y multiplataforma para iOS y Android.'
+      ),
       span: '',
     },
     {
-      icon: '☁️',
-      title: 'Cloud Solutions',
-      description: 'Cloud architecture, migration, and optimization using AWS, Azure, and GCP.',
+      icon: '\u2601\uFE0F',
+      title: t('Cloud Solutions', 'Soluciones en la nube'),
+      description: t(
+        'Cloud architecture, migration, and optimization using AWS, Azure, and GCP.',
+        'Arquitectura, migraci\u00f3n y optimizaci\u00f3n en la nube con AWS, Azure y GCP.'
+      ),
       span: 'md:col-span-2',
     },
     {
-      icon: '⚙️',
-      title: 'Automation & DevOps',
-      description: 'Intelligent automation, CI/CD pipelines, and infrastructure as code.',
+      icon: '\u2699\uFE0F',
+      title: t('Automation & DevOps', 'Automatizaci\u00f3n y DevOps'),
+      description: t(
+        'Intelligent automation, CI/CD pipelines, and infrastructure as code.',
+        'Automatizaci\u00f3n inteligente, pipelines CI/CD e infraestructura como c\u00f3digo.'
+      ),
       span: '',
     },
     {
-      icon: '📊',
-      title: 'Data Analytics',
-      description: 'Advanced analytics, visualization, and business intelligence.',
+      icon: '\uD83D\uDCCA',
+      title: t('Data Analytics', 'An\u00e1lisis de datos'),
+      description: t(
+        'Advanced analytics, visualization, and business intelligence.',
+        'An\u00e1lisis avanzado, visualizaci\u00f3n e inteligencia de negocios.'
+      ),
       span: '',
     },
     {
-      icon: '🎨',
-      title: 'UI/UX Design',
-      description: 'Beautiful, intuitive interfaces with user experience at the forefront.',
+      icon: '\uD83C\uDFA8',
+      title: t('UI/UX Design', 'Dise\u00f1o UI/UX'),
+      description: t(
+        'Beautiful, intuitive interfaces with user experience at the forefront.',
+        'Interfaces intuitivas y atractivas con la experiencia de usuario como prioridad.'
+      ),
       span: '',
     },
   ];
 
   const stats = [
-    { value: '50+', label: 'Projects Delivered' },
-    { value: '98%', label: 'Client Satisfaction' },
-    { value: '24/7', label: 'Support Available' },
-    { value: '10+', label: 'Industries Served' },
+    { value: '50+', label: t('Projects Delivered', 'Proyectos entregados') },
+    { value: '98%', label: t('Client Satisfaction', 'Satisfacci\u00f3n del cliente') },
+    { value: '24/7', label: t('Support Available', 'Soporte disponible') },
+    { value: '10+', label: t('Industries Served', 'Industrias atendidas') },
   ];
+
+  const coreServiceLabel = t('Core Service', 'Servicio principal');
+  const terminalOutput = t('3 tasks completed in 2.4s', '3 tareas completadas en 2.4\u00a0s');
 
   return (
     <div className="min-h-screen relative z-10 noise-overlay">
@@ -117,7 +143,9 @@ const Home = () => {
               transition={{ delay: 0.05, duration: 0.5 }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-codex-green animate-pulse" />
-              <span className="text-xs font-medium text-codex-green tracking-wide">AI-Powered Solutions</span>
+              <span className="text-xs font-medium text-codex-green tracking-wide">
+                {t('AI-Powered Solutions', 'Soluciones impulsadas por IA')}
+              </span>
             </motion.div>
 
             <motion.h1
@@ -126,7 +154,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}
             >
-              Build smarter with{' '}
+              {t('Build smarter with', 'Construye m\u00e1s inteligente con')}{' '}
               <span className="text-codex-green relative">
                 Pantrio AI
                 {/* Underline glow */}
@@ -146,8 +174,10 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
-              We design and build AI agents, automation systems, and modern web
-              applications that help businesses operate faster and scale efficiently.
+              {t(
+                'We design and build AI agents, automation systems, and modern web applications that help businesses operate faster and scale efficiently.',
+                'Dise\u00f1amos y desarrollamos agentes de IA, sistemas de automatizaci\u00f3n y aplicaciones web modernas que ayudan a las empresas a operar m\u00e1s r\u00e1pido y escalar de manera eficiente.'
+              )}
             </motion.p>
 
             <motion.div
@@ -157,10 +187,10 @@ const Home = () => {
               transition={{ delay: 0.3, duration: 0.6 }}
             >
               <MagicButton onClick={() => navigate('/contact')} size="lg">
-                Start a Project
+                {t('Start a Project', 'Iniciar un proyecto')}
               </MagicButton>
               <MagicButton variant="outline" size="lg" onClick={scrollToServices}>
-                Explore Services
+                {t('Explore Services', 'Explorar servicios')}
               </MagicButton>
             </motion.div>
           </motion.div>
@@ -232,10 +262,14 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-5">
-              What We <span className="text-codex-green">Build</span>
+              {t('What We', 'Lo que')}{' '}
+              <span className="text-codex-green">{t('Build', 'construimos')}</span>
             </h2>
             <p className="text-lg text-codex-text-muted max-w-2xl mx-auto">
-              End-to-end technology solutions, from concept to deployment.
+              {t(
+                'End-to-end technology solutions, from concept to deployment.',
+                'Soluciones tecnol\u00f3gicas integrales, del concepto al despliegue.'
+              )}
             </p>
           </motion.div>
 
@@ -260,7 +294,7 @@ const Home = () => {
                       <div className="flex items-center gap-3 mb-6">
                         <div className="text-4xl">{service.icon}</div>
                         <span className="text-[10px] font-semibold uppercase tracking-widest text-codex-green bg-codex-green/10 px-3 py-1 rounded-full">
-                          Core Service
+                          {coreServiceLabel}
                         </span>
                       </div>
                       <h3 className="text-2xl font-bold mb-4 text-codex-text">{service.title}</h3>
@@ -279,8 +313,8 @@ const Home = () => {
                         <div><span className="text-codex-text-dim">agent</span> <span className="text-codex-text-dim">=</span> <span className="text-codex-text-muted">Agent</span><span className="text-codex-text-dim">(</span><span className="text-amber-400/70">"analyzer"</span><span className="text-codex-text-dim">)</span></div>
                         <div><span className="text-codex-text-dim">result</span> <span className="text-codex-text-dim">=</span> <span className="text-codex-text-dim">agent.</span><span className="text-codex-text-muted">run</span><span className="text-codex-text-dim">(</span><span className="text-amber-400/70">"Optimize workflow"</span><span className="text-codex-text-dim">)</span></div>
                         <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/[0.04]">
-                          <span className="text-codex-green">✓</span>
-                          <span className="text-codex-text-dim">3 tasks completed in 2.4s</span>
+                          <span className="text-codex-green">{'\u2713'}</span>
+                          <span className="text-codex-text-dim">{terminalOutput}</span>
                         </div>
                       </div>
                     </div>
@@ -310,19 +344,39 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold mb-4">
-              How We <span className="text-codex-green">Work</span>
+              {t('How We', 'C\u00f3mo')}{' '}
+              <span className="text-codex-green">{t('Work', 'trabajamos')}</span>
             </h2>
             <p className="text-codex-text-muted text-sm max-w-xl mx-auto">
-              A streamlined process designed to get you from idea to production.
+              {t(
+                'A streamlined process designed to get you from idea to production.',
+                'Un proceso optimizado para llevar tu idea a producci\u00f3n.'
+              )}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-0">
             {[
-              { step: '01', title: 'Discovery', desc: 'We analyze your needs and define the project scope.' },
-              { step: '02', title: 'Design', desc: 'Architecture and UI/UX tailored to your goals.' },
-              { step: '03', title: 'Build', desc: 'Agile development with continuous iteration.' },
-              { step: '04', title: 'Deploy', desc: 'Launch, monitor, and scale with confidence.' },
+              {
+                step: '01',
+                title: t('Discovery', 'Descubrimiento'),
+                desc: t('We analyze your needs and define the project scope.', 'Analizamos tus necesidades y definimos el alcance del proyecto.'),
+              },
+              {
+                step: '02',
+                title: t('Design', 'Dise\u00f1o'),
+                desc: t('Architecture and UI/UX tailored to your goals.', 'Arquitectura y UI/UX a la medida de tus objetivos.'),
+              },
+              {
+                step: '03',
+                title: t('Build', 'Desarrollo'),
+                desc: t('Agile development with continuous iteration.', 'Desarrollo \u00e1gil con iteraci\u00f3n continua.'),
+              },
+              {
+                step: '04',
+                title: t('Deploy', 'Despliegue'),
+                desc: t('Launch, monitor, and scale with confidence.', 'Lanzamiento, monitoreo y escalamiento con confianza.'),
+              },
             ].map((item, index) => (
               <motion.div
                 key={index}
@@ -371,17 +425,20 @@ const Home = () => {
               />
               <div className="relative z-10">
                 <h2 className="text-3xl font-bold mb-4 text-codex-text">
-                  Ready to build something great?
+                  {t('Ready to build something great?', '\u00bfListo para construir algo grandioso?')}
                 </h2>
                 <p className="text-codex-text-muted mb-8 max-w-xl mx-auto">
-                  Tell us about your project and we'll craft a solution that fits.
+                  {t(
+                    'Tell us about your project and we\u2019ll craft a solution that fits.',
+                    'Cu\u00e9ntanos sobre tu proyecto y crearemos una soluci\u00f3n a tu medida.'
+                  )}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <MagicButton size="lg" onClick={() => navigate('/contact')}>
-                    Start a Project
+                    {t('Start a Project', 'Iniciar un proyecto')}
                   </MagicButton>
                   <MagicButton variant="outline" size="lg" onClick={() => navigate('/portfolio')}>
-                    View Our Work
+                    {t('View Our Work', 'Ver nuestro trabajo')}
                   </MagicButton>
                 </div>
               </div>

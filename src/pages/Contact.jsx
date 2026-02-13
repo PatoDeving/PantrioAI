@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import Button from '../components/Button';
+import { useLanguage } from '../context/LanguageContext';
 
 const Contact = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -73,10 +75,13 @@ const Contact = () => {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-5">
-            Get in <span className="text-codex-green">Touch</span>
+            {t('Get in', 'Ponte en')} <span className="text-codex-green">{t('Touch', 'contacto')}</span>
           </h1>
           <p className="text-lg text-codex-text-muted max-w-2xl mx-auto">
-            Ready to transform your business? Contact us today.
+            {t(
+              'Ready to transform your business? Contact us today.',
+              '\u00bfListo para transformar tu negocio? Cont\u00e1ctanos hoy.'
+            )}
           </p>
         </motion.div>
 
@@ -87,7 +92,9 @@ const Contact = () => {
             transition={{ delay: 0.1, duration: 0.5 }}
           >
             <div className="bg-codex-card border border-white/[0.06] rounded-xl p-8">
-              <h2 className="text-xl font-semibold mb-6 text-codex-text">Send us a Message</h2>
+              <h2 className="text-xl font-semibold mb-6 text-codex-text">
+                {t('Send us a Message', 'Env\u00edanos un mensaje')}
+              </h2>
 
               {submitStatus === 'success' && (
                 <motion.div
@@ -95,7 +102,10 @@ const Contact = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-6 p-4 bg-codex-green/10 border border-codex-green/30 rounded-lg text-codex-green text-sm"
                 >
-                  Thank you! Your message has been sent successfully. We'll get back to you within 24 hours.
+                  {t(
+                    'Thank you! Your message has been sent successfully. We\u2019ll get back to you within 24 hours.',
+                    '\u00a1Gracias! Tu mensaje se ha enviado correctamente. Te responderemos en un plazo de 24\u00a0horas.'
+                  )}
                 </motion.div>
               )}
 
@@ -105,26 +115,37 @@ const Contact = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm"
                 >
-                  Sorry, there was an error sending your message. Please try again or email us directly at patodinkmedia@gmail.com
+                  {t(
+                    'Sorry, there was an error sending your message. Please try again or email us directly at patodinkmedia@gmail.com',
+                    'Lo sentimos, hubo un error al enviar tu mensaje. Int\u00e9ntalo de nuevo o escr\u00edbenos directamente a patodinkmedia@gmail.com'
+                  )}
                 </motion.div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2 text-codex-text-muted">Name</label>
-                  <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className={inputClasses} placeholder="John Doe" disabled={isSubmitting} />
+                  <label htmlFor="name" className="block text-sm font-medium mb-2 text-codex-text-muted">
+                    {t('Name', 'Nombre')}
+                  </label>
+                  <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className={inputClasses} placeholder={t('John Doe', 'Tu nombre')} disabled={isSubmitting} />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2 text-codex-text-muted">Email</label>
+                  <label htmlFor="email" className="block text-sm font-medium mb-2 text-codex-text-muted">
+                    {t('Email', 'Correo electr\u00f3nico')}
+                  </label>
                   <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className={inputClasses} placeholder="john@example.com" disabled={isSubmitting} />
                 </div>
                 <div>
-                  <label htmlFor="company" className="block text-sm font-medium mb-2 text-codex-text-muted">Company (Optional)</label>
-                  <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} className={inputClasses} placeholder="Your Company" disabled={isSubmitting} />
+                  <label htmlFor="company" className="block text-sm font-medium mb-2 text-codex-text-muted">
+                    {t('Company (Optional)', 'Empresa (opcional)')}
+                  </label>
+                  <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} className={inputClasses} placeholder={t('Your Company', 'Tu empresa')} disabled={isSubmitting} />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2 text-codex-text-muted">Message</label>
-                  <textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows="5" className={`${inputClasses} resize-none`} placeholder="Tell us about your project..." disabled={isSubmitting} />
+                  <label htmlFor="message" className="block text-sm font-medium mb-2 text-codex-text-muted">
+                    {t('Message', 'Mensaje')}
+                  </label>
+                  <textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows="5" className={`${inputClasses} resize-none`} placeholder={t('Tell us about your project...', 'Cu\u00e9ntanos sobre tu proyecto...')} disabled={isSubmitting} />
                 </div>
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? (
@@ -133,10 +154,10 @@ const Contact = () => {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Sending...
+                      {t('Sending...', 'Enviando...')}
                     </span>
                   ) : (
-                    'Send Message'
+                    t('Send Message', 'Enviar mensaje')
                   )}
                 </Button>
               </form>

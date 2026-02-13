@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { language, toggleLanguage, t } = useLanguage();
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Portfolio', path: '/portfolio' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('Home', 'Inicio'), path: '/' },
+    { name: t('Portfolio', 'Portafolio'), path: '/portfolio' },
+    { name: t('About', 'Nosotros'), path: '/about' },
+    { name: t('Contact', 'Contacto'), path: '/contact' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -57,10 +59,25 @@ const Navbar = () => {
                 </div>
               </Link>
             ))}
+
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="ml-3 px-3 py-1.5 rounded-md text-xs font-medium border border-white/[0.08] text-codex-text-muted hover:text-codex-text hover:bg-white/[0.04] transition-colors duration-150 uppercase tracking-wider"
+              title={language === 'en' ? 'Cambiar a espa\u00f1ol' : 'Switch to English'}
+            >
+              {language === 'en' ? 'ES' : 'EN'}
+            </button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile: Language toggle + menu button */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleLanguage}
+              className="px-2.5 py-1.5 rounded-md text-xs font-medium border border-white/[0.08] text-codex-text-muted hover:text-codex-text transition-colors duration-150 uppercase tracking-wider"
+            >
+              {language === 'en' ? 'ES' : 'EN'}
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-codex-text-muted hover:text-codex-text p-2 rounded-md hover:bg-white/[0.04] transition-colors duration-150"

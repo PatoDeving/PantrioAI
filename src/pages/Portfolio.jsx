@@ -1,55 +1,100 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const Portfolio = () => {
+  const { t } = useLanguage();
+
   const projects = [
     {
-      title: 'E-Commerce AI Platform',
-      category: 'AI & Web Development',
-      description: 'Built an intelligent recommendation engine that increased sales by 45% for a major retail client.',
-      image: '🛒',
+      title: t('E-Commerce AI Platform', 'Plataforma de e-commerce con IA'),
+      category: t('AI & Web Development', 'IA y desarrollo web'),
+      description: t(
+        'Built an intelligent recommendation engine that increased sales by 45% for a major retail client.',
+        'Desarrollamos un motor de recomendaciones inteligente que increment\u00f3 las ventas en un 45\u00a0% para un cliente del sector retail.'
+      ),
+      image: '\uD83D\uDED2',
       tags: ['React', 'Python', 'TensorFlow', 'AWS'],
-      metrics: { clients: '10K+', revenue: '+45%', time: '3 months' },
+      metrics: {
+        clients: { value: '10K+', label: t('Clients', 'Clientes') },
+        revenue: { value: '+45%', label: t('Revenue', 'Ingresos') },
+        time: { value: t('2 months', '2 meses'), label: t('Time', 'Tiempo') },
+      },
     },
     {
-      title: 'AI-Powered Chatbot',
-      category: 'AI & NLP',
-      description: 'Customer service chatbot handling 80% of inquiries automatically with high satisfaction.',
-      image: '💬',
+      title: t('AI-Powered Chatbot', 'Chatbot con inteligencia artificial'),
+      category: t('AI & NLP', 'IA y PLN'),
+      description: t(
+        'Customer service chatbot handling 80% of inquiries automatically with high satisfaction rates.',
+        'Chatbot de atenci\u00f3n al cliente que resuelve el 80\u00a0% de las consultas de forma autom\u00e1tica con altos \u00edndices de satisfacci\u00f3n.'
+      ),
+      image: '\uD83D\uDCAC',
       tags: ['Python', 'GPT-4', 'React', 'AWS'],
-      metrics: { queries: '100K+/mo', satisfaction: '92%', time: '2 months' },
+      metrics: {
+        queries: { value: '100K+/mo', label: t('Queries', 'Consultas') },
+        satisfaction: { value: '92%', label: t('Satisfaction', 'Satisfacci\u00f3n') },
+        time: { value: t('1 month', '1 mes'), label: t('Time', 'Tiempo') },
+      },
     },
     {
-      title: 'Cloud Migration Project',
-      category: 'Cloud & DevOps',
-      description: 'Migrated legacy infrastructure to cloud, reducing costs by 40% and improving scalability.',
-      image: '☁️',
+      title: t('Cloud Migration Project', 'Proyecto de migraci\u00f3n a la nube'),
+      category: t('Cloud & DevOps', 'Nube y DevOps'),
+      description: t(
+        'Migrated legacy infrastructure to the cloud, reducing costs by 40% and improving scalability.',
+        'Migramos infraestructura heredada a la nube, reduciendo costos en un 40\u00a0% y mejorando la escalabilidad.'
+      ),
+      image: '\u2601\uFE0F',
       tags: ['AWS', 'Kubernetes', 'Terraform', 'CI/CD'],
-      metrics: { servers: '200+', savings: '-40%', time: '4 months' },
+      metrics: {
+        servers: { value: '200+', label: t('Servers', 'Servidores') },
+        savings: { value: '-40%', label: t('Savings', 'Ahorro') },
+        time: { value: t('3 months', '3 meses'), label: t('Time', 'Tiempo') },
+      },
     },
     {
-      title: 'UX/UI Design Platform',
-      category: 'UI/UX Design',
-      description: 'Beautiful, intuitive interface design system with user experience at the forefront of every decision.',
-      image: '🎨',
+      title: t('UX/UI Design Platform', 'Plataforma de dise\u00f1o UX/UI'),
+      category: t('UI/UX Design', 'Dise\u00f1o UI/UX'),
+      description: t(
+        'A complete design system with beautiful, intuitive interfaces built for an optimal user experience.',
+        'Sistema de dise\u00f1o completo con interfaces intuitivas y atractivas, enfocado en una experiencia de usuario \u00f3ptima.'
+      ),
+      image: '\uD83C\uDFA8',
       tags: ['Figma', 'Adobe XD', 'React', 'Tailwind CSS'],
-      metrics: { screens: '150+', rating: '4.9/5', time: '3 months' },
+      metrics: {
+        screens: { value: '150+', label: t('Screens', 'Pantallas') },
+        rating: { value: '4.9/5', label: t('Rating', 'Calificaci\u00f3n') },
+        time: { value: t('2 months', '2 meses'), label: t('Time', 'Tiempo') },
+      },
     },
     {
-      title: 'Modern Web Application',
-      category: 'Web Development',
-      description: 'Responsive web application built with cutting-edge technologies delivering exceptional performance.',
-      image: '💻',
+      title: t('Modern Web Application', 'Aplicaci\u00f3n web moderna'),
+      category: t('Web Development', 'Desarrollo web'),
+      description: t(
+        'Responsive web application built with cutting-edge technologies, delivering exceptional performance.',
+        'Aplicaci\u00f3n web responsiva desarrollada con tecnolog\u00edas de vanguardia y un rendimiento excepcional.'
+      ),
+      image: '\uD83D\uDCBB',
       tags: ['React', 'Next.js', 'Node.js', 'TypeScript'],
-      metrics: { users: '25K+', speed: '95/100', time: '4 months' },
+      metrics: {
+        users: { value: '25K+', label: t('Users', 'Usuarios') },
+        speed: { value: '95/100', label: t('Speed', 'Velocidad') },
+        time: { value: t('3 months', '3 meses'), label: t('Time', 'Tiempo') },
+      },
     },
     {
-      title: 'AI Agent System',
-      category: 'AI & Automation',
-      description: 'Autonomous AI agents handling complex workflows and decision-making processes with minimal human intervention.',
-      image: '🤖',
+      title: t('AI Agent System', 'Sistema de agentes de IA'),
+      category: t('AI & Automation', 'IA y automatizaci\u00f3n'),
+      description: t(
+        'Autonomous AI agents handling complex workflows and decision-making processes with minimal human intervention.',
+        'Agentes de IA aut\u00f3nomos que gestionan flujos de trabajo complejos y procesos de toma de decisiones con m\u00ednima intervenci\u00f3n humana.'
+      ),
+      image: '\uD83E\uDD16',
       tags: ['Python', 'LangChain', 'GPT-4', 'Azure'],
-      metrics: { tasks: '10K+/day', efficiency: '+75%', time: '5 months' },
+      metrics: {
+        tasks: { value: '10K+/day', label: t('Tasks', 'Tareas') },
+        efficiency: { value: '+75%', label: t('Efficiency', 'Eficiencia') },
+        time: { value: t('4 months', '4 meses'), label: t('Time', 'Tiempo') },
+      },
     },
   ];
 
@@ -64,11 +109,13 @@ const Portfolio = () => {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-5">
-            Our <span className="text-codex-green">Portfolio</span>
+            {t('Our', 'Nuestro')} <span className="text-codex-green">{t('Portfolio', 'portafolio')}</span>
           </h1>
           <p className="text-lg text-codex-text-muted max-w-2xl mx-auto">
-            Explore our successful projects and see how we've helped businesses
-            transform with technology.
+            {t(
+              'Explore our successful projects and see how we\u2019ve helped businesses transform with technology.',
+              'Explora nuestros proyectos exitosos y descubre c\u00f3mo hemos ayudado a empresas a transformarse con tecnolog\u00eda.'
+            )}
           </p>
         </motion.div>
 
@@ -108,10 +155,10 @@ const Portfolio = () => {
 
                 {/* Metrics */}
                 <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/[0.06]">
-                  {Object.entries(project.metrics).map(([key, value], metricIndex) => (
+                  {Object.values(project.metrics).map((metric, metricIndex) => (
                     <div key={metricIndex} className="text-center">
-                      <div className="text-base font-semibold text-codex-green">{value}</div>
-                      <div className="text-xs text-codex-text-dim capitalize">{key}</div>
+                      <div className="text-base font-semibold text-codex-green">{metric.value}</div>
+                      <div className="text-xs text-codex-text-dim">{metric.label}</div>
                     </div>
                   ))}
                 </div>
@@ -129,8 +176,8 @@ const Portfolio = () => {
           transition={{ duration: 0.5 }}
         >
           {[
-            { number: '10+', label: 'Industries Served' },
-            { number: '98%', label: 'Client Satisfaction' },
+            { number: '10+', label: t('Industries Served', 'Industrias atendidas') },
+            { number: '98%', label: t('Client Satisfaction', 'Satisfacci\u00f3n del cliente') },
           ].map((stat, index) => (
             <motion.div
               key={index}

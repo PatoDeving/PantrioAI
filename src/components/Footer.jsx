@@ -1,8 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
+
+  const quickLinks = [
+    { name: t('Home', 'Inicio'), path: '/' },
+    { name: t('Portfolio', 'Portafolio'), path: '/portfolio' },
+    { name: t('About', 'Nosotros'), path: '/about' },
+    { name: t('Contact', 'Contacto'), path: '/contact' },
+  ];
 
   return (
     <footer className="relative z-10 bg-codex-surface border-t border-white/[0.06] mt-20">
@@ -18,22 +27,26 @@ const Footer = () => {
               />
             </div>
             <p className="text-codex-text-dim text-sm leading-relaxed max-w-md">
-              Transforming businesses with cutting-edge AI solutions, web development,
-              and cloud automation services.
+              {t(
+                'Transforming businesses with cutting-edge AI solutions, web development, and cloud automation services.',
+                'Transformamos empresas con soluciones de IA de vanguardia, desarrollo web y servicios de automatizaci\u00f3n en la nube.'
+              )}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold mb-4 text-codex-text uppercase tracking-wider">Quick Links</h4>
+            <h4 className="text-sm font-semibold mb-4 text-codex-text uppercase tracking-wider">
+              {t('Quick Links', 'Enlaces r\u00e1pidos')}
+            </h4>
             <ul className="space-y-2">
-              {['Home', 'Services', 'Portfolio', 'About', 'Contact'].map((item) => (
-                <li key={item}>
+              {quickLinks.map((item) => (
+                <li key={item.path}>
                   <Link
-                    to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                    to={item.path}
                     className="text-codex-text-dim text-sm hover:text-codex-green transition-colors duration-150"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
@@ -42,11 +55,13 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-sm font-semibold mb-4 text-codex-text uppercase tracking-wider">Contact</h4>
+            <h4 className="text-sm font-semibold mb-4 text-codex-text uppercase tracking-wider">
+              {t('Contact', 'Contacto')}
+            </h4>
             <ul className="space-y-2 text-codex-text-dim text-sm">
-              <li>Email: patodinkmedia@gmail.com</li>
-              <li>Phone: +52 (446) 242-1428</li>
-              <li>Location: Interlomas, Edo.Mex.</li>
+              <li>{t('Email', 'Correo')}: patodinkmedia@gmail.com</li>
+              <li>{t('Phone', 'Tel\u00e9fono')}: +52 (446) 242-1428</li>
+              <li>{t('Location', 'Ubicaci\u00f3n')}: Interlomas, Edo. M\u00e9x.</li>
             </ul>
           </div>
         </div>
@@ -54,7 +69,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-10 pt-6 border-t border-white/[0.06]">
           <p className="text-center text-codex-text-dim text-xs">
-            &copy; {currentYear} Pantrio AI. All rights reserved.
+            &copy; {currentYear} Pantrio AI. {t('All rights reserved.', 'Todos los derechos reservados.')}
           </p>
         </div>
       </div>
