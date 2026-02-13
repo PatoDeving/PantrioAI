@@ -14,7 +14,7 @@ function AppContent() {
   const isHiddenPage = location.pathname === '/hidden1';
 
   return (
-    <div className="App min-h-screen bg-dark-bg text-white">
+    <div className="App min-h-screen bg-codex-bg text-codex-text">
       {!isHiddenPage && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />

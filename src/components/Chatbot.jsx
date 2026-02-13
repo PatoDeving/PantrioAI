@@ -2,15 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
-/**
- * Floating Chatbot Component
- * Features:
- * - Floating button in bottom-right corner
- * - Expandable chat window with conversation flow
- * - Step-by-step data collection
- * - EmailJS integration for sending inquiries
- * - Smooth animations and typing indicators
- */
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -29,7 +20,6 @@ const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -38,10 +28,9 @@ const Chatbot = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Initialize conversation when chatbot opens
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      addBotMessage("Hello! 👋 I'm your Pantrio AI assistant. How can I help you today?");
+      addBotMessage("Hello! I'm your Pantrio AI assistant. How can I help you today?");
       setTimeout(() => {
         addBotMessage("Please choose an option:", true);
       }, 800);
@@ -94,7 +83,7 @@ const Chatbot = () => {
         setTimeout(() => {
           addBotMessage("We offer a wide range of AI and technology solutions:");
           setTimeout(() => {
-            addBotMessage("🤖 AI & Machine Learning\n💻 Web Development\n📱 Mobile Development\n☁️ Cloud Solutions\n⚙️ Automation & DevOps\n📊 Data Analytics\n🎨 UI/UX Design");
+            addBotMessage("AI & Machine Learning\nWeb Development\nMobile Development\nCloud Solutions\nAutomation & DevOps\nData Analytics\nUI/UX Design");
             setTimeout(() => {
               addBotMessage("Would you like to schedule a call to discuss any of these services?", true);
             }, 1000);
@@ -178,9 +167,8 @@ const Chatbot = () => {
     addBotMessage("Processing your request...");
 
     try {
-      // EmailJS configuration
       const templateParams = {
-        to_email: 'info@pantrioai.com',
+        to_email: 'patodinkmedia@gmail.com',
         inquiry_type: data.inquiryType,
         user_name: data.name,
         user_email: data.email,
@@ -191,16 +179,16 @@ const Chatbot = () => {
       };
 
       await emailjs.send(
-        'service_p579v5u', // Your service ID
-        'template_msezgd8', // Replace with your EmailJS template ID
+        'service_p579v5u',
+        'template_msezgd8',
         templateParams,
-        'ELgEBh_c-dvvojtLW' // Replace with your EmailJS public key
+        'ELgEBh_c-dvvojtLW'
       );
 
       setIsSending(false);
       setConversationState('success');
       setTimeout(() => {
-        addBotMessage("✅ Thank you! Your request has been sent successfully. We'll get back to you within 24 hours.");
+        addBotMessage("Thank you! Your request has been sent successfully. We'll get back to you within 24 hours.");
         setTimeout(() => {
           addBotMessage("Is there anything else I can help you with?", true);
         }, 1000);
@@ -211,7 +199,7 @@ const Chatbot = () => {
       setIsSending(false);
       setConversationState('error');
       setTimeout(() => {
-        addBotMessage("❌ Sorry, there was an error sending your request. Please try again or contact us directly at info@pantrioai.com");
+        addBotMessage("Sorry, there was an error sending your request. Please try again or contact us directly at patodinkmedia@gmail.com");
         setTimeout(() => {
           addBotMessage("Would you like to try again?", true);
         }, 1000);
@@ -230,7 +218,7 @@ const Chatbot = () => {
     });
     setConversationState('initial');
     setUserInput('');
-    addBotMessage("Hello! 👋 I'm your Pantrio AI assistant. How can I help you today?");
+    addBotMessage("Hello! I'm your Pantrio AI assistant. How can I help you today?");
     setTimeout(() => {
       addBotMessage("Please choose an option:", true);
     }, 800);
@@ -252,30 +240,30 @@ const Chatbot = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            initial={{ opacity: 0, y: 16, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.8 }}
-            transition={{ duration: 0.3 }}
-            className="mb-4 w-80 sm:w-96 h-[500px] bg-dark-card border border-gray-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+            exit={{ opacity: 0, y: 16, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="mb-4 w-80 sm:w-96 h-[500px] bg-codex-card border border-white/[0.06] rounded-2xl shadow-card overflow-hidden flex flex-col"
           >
             {/* Chat Header */}
-            <div className="bg-gradient-to-r from-neon-blue to-neon-purple p-4 flex justify-between items-center flex-shrink-0">
-              <h3 className="font-bold text-white">Pantrio AI Assistant</h3>
+            <div className="bg-codex-green p-4 flex justify-between items-center flex-shrink-0">
+              <h3 className="font-semibold text-white text-sm">Pantrio AI Assistant</h3>
               <div className="flex items-center gap-2">
                 <button
                   onClick={resetChat}
-                  className="text-white hover:text-gray-200 transition-colors"
+                  className="text-white/80 hover:text-white transition-colors duration-150"
                   title="Reset conversation"
                 >
-                  <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-4 w-4" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                     <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-white hover:text-gray-200 transition-colors"
+                  className="text-white/80 hover:text-white transition-colors duration-150"
                 >
-                  <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-4 w-4" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                     <path d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -283,52 +271,51 @@ const Chatbot = () => {
             </div>
 
             {/* Chat Body */}
-            <div className="flex-1 p-4 overflow-y-auto bg-dark-bg">
+            <div className="flex-1 p-4 overflow-y-auto bg-codex-bg">
               {messages.map((message, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.2 }}
                   className={`mb-4 ${message.type === 'user' ? 'text-right' : 'text-left'}`}
                 >
                   <div
                     className={`inline-block p-3 rounded-lg max-w-[80%] ${
                       message.type === 'user'
-                        ? 'bg-primary text-white'
-                        : 'bg-dark-card border border-gray-700 text-gray-300'
+                        ? 'bg-codex-green text-white'
+                        : 'bg-codex-card border border-white/[0.06] text-codex-text-muted'
                     }`}
                   >
                     <p className="text-sm whitespace-pre-line">{message.text}</p>
                   </div>
 
-                  {/* Show options if this is an options message */}
                   {message.showOptions && message.type === 'bot' && (
                     <motion.div
                       className="mt-3 space-y-2"
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
+                      transition={{ delay: 0.15 }}
                     >
                       {conversationState === 'initial' && (
                         <>
                           <button
                             onClick={() => handleOptionClick('Schedule a Call')}
-                            className="block w-full text-left px-4 py-2 bg-dark-card border border-primary hover:bg-primary/20 rounded-lg transition-colors text-sm text-gray-300"
+                            className="block w-full text-left px-4 py-2 bg-codex-card border border-codex-green/30 hover:bg-codex-green/10 rounded-lg transition-colors duration-150 text-sm text-codex-text-muted"
                           >
-                            📞 Schedule a Call
+                            Schedule a Call
                           </button>
                           <button
                             onClick={() => handleOptionClick('Ask a Question')}
-                            className="block w-full text-left px-4 py-2 bg-dark-card border border-primary hover:bg-primary/20 rounded-lg transition-colors text-sm text-gray-300"
+                            className="block w-full text-left px-4 py-2 bg-codex-card border border-codex-green/30 hover:bg-codex-green/10 rounded-lg transition-colors duration-150 text-sm text-codex-text-muted"
                           >
-                            ❓ Ask a Question
+                            Ask a Question
                           </button>
                           <button
                             onClick={() => handleOptionClick('View Services')}
-                            className="block w-full text-left px-4 py-2 bg-dark-card border border-primary hover:bg-primary/20 rounded-lg transition-colors text-sm text-gray-300"
+                            className="block w-full text-left px-4 py-2 bg-codex-card border border-codex-green/30 hover:bg-codex-green/10 rounded-lg transition-colors duration-150 text-sm text-codex-text-muted"
                           >
-                            🔍 View Services
+                            View Services
                           </button>
                         </>
                       )}
@@ -336,15 +323,15 @@ const Chatbot = () => {
                         <>
                           <button
                             onClick={() => handleOptionClick('Schedule a Call')}
-                            className="block w-full text-left px-4 py-2 bg-dark-card border border-primary hover:bg-primary/20 rounded-lg transition-colors text-sm text-gray-300"
+                            className="block w-full text-left px-4 py-2 bg-codex-card border border-codex-green/30 hover:bg-codex-green/10 rounded-lg transition-colors duration-150 text-sm text-codex-text-muted"
                           >
-                            📞 Schedule Another Call
+                            Schedule Another Call
                           </button>
                           <button
                             onClick={() => handleOptionClick('Ask a Question')}
-                            className="block w-full text-left px-4 py-2 bg-dark-card border border-primary hover:bg-primary/20 rounded-lg transition-colors text-sm text-gray-300"
+                            className="block w-full text-left px-4 py-2 bg-codex-card border border-codex-green/30 hover:bg-codex-green/10 rounded-lg transition-colors duration-150 text-sm text-codex-text-muted"
                           >
-                            ❓ Ask a Question
+                            Ask a Question
                           </button>
                         </>
                       )}
@@ -358,23 +345,23 @@ const Chatbot = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="flex items-center gap-2 text-gray-500"
+                  className="flex items-center gap-2 text-codex-text-dim"
                 >
                   <div className="flex gap-1">
                     <motion.div
-                      className="w-2 h-2 bg-gray-500 rounded-full"
-                      animate={{ y: [0, -5, 0] }}
-                      transition={{ repeat: Infinity, duration: 0.6, delay: 0 }}
+                      className="w-1.5 h-1.5 bg-codex-text-dim rounded-full"
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ repeat: Infinity, duration: 1, delay: 0 }}
                     />
                     <motion.div
-                      className="w-2 h-2 bg-gray-500 rounded-full"
-                      animate={{ y: [0, -5, 0] }}
-                      transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }}
+                      className="w-1.5 h-1.5 bg-codex-text-dim rounded-full"
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
                     />
                     <motion.div
-                      className="w-2 h-2 bg-gray-500 rounded-full"
-                      animate={{ y: [0, -5, 0] }}
-                      transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }}
+                      className="w-1.5 h-1.5 bg-codex-text-dim rounded-full"
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
                     />
                   </div>
                 </motion.div>
@@ -384,7 +371,7 @@ const Chatbot = () => {
             </div>
 
             {/* Chat Input */}
-            <div className="p-4 border-t border-gray-800 flex-shrink-0">
+            <div className="p-3 border-t border-white/[0.06] flex-shrink-0">
               <div className="flex space-x-2">
                 <input
                   ref={inputRef}
@@ -397,16 +384,16 @@ const Chatbot = () => {
                       ? 'Choose an option above...'
                       : 'Type your message...'
                   }
-                  className="flex-1 bg-dark-bg border border-gray-700 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-neon-blue transition-colors"
+                  className="flex-1 bg-codex-bg border border-white/[0.08] rounded-lg px-4 py-2 text-sm text-codex-text focus:outline-none focus:border-codex-green/50 transition-colors duration-150 placeholder:text-codex-text-dim"
                   disabled={isSending || conversationState === 'initial'}
                 />
                 <button
                   onClick={handleSendClick}
                   disabled={isSending || conversationState === 'initial' || !userInput.trim()}
-                  className="bg-neon-blue text-black px-4 py-2 rounded-lg font-semibold hover:bg-opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-codex-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-codex-green-light transition-colors duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {isSending ? (
-                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -423,25 +410,11 @@ const Chatbot = () => {
       {/* Floating Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-gradient-to-r from-neon-blue to-neon-purple text-white p-4 rounded-full shadow-2xl"
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        whileTap={{ scale: 0.9 }}
-        animate={{
-          boxShadow: isOpen
-            ? '0 0 0 0 rgba(0, 243, 255, 0)'
-            : [
-                '0 0 0 0 rgba(0, 243, 255, 0.4)',
-                '0 0 0 20px rgba(0, 243, 255, 0)',
-              ],
-        }}
-        transition={{
-          boxShadow: {
-            repeat: Infinity,
-            duration: 2,
-          },
-        }}
+        className="bg-codex-green text-white p-3.5 rounded-full shadow-card hover:shadow-card-hover transition-shadow duration-150"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        <svg className="h-6 w-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
           {isOpen ? (
             <path d="M6 18L18 6M6 6l12 12" />
           ) : (

@@ -7,50 +7,52 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // New Brand Colors
-        'primary': '#3366FF',
-        'primary-dark': '#1B3FBF',
-        'primary-light': '#5C8CFF',
-        'accent-1': '#33CCFF',
-        'accent-2': '#7A33FF',
-        'accent-3': '#33FFE0',
-        'bg-dark': '#0A0A0F',
-        'surface': '#10121A',
-        'card': '#181B26',
-        'border': '#1F2433',
-        'text-primary': '#FFFFFF',
-        'text-secondary': '#A5AEC1',
+        // Brand palette - blue accent from logo (#3366FF)
+        'codex-bg': '#0a0a0a',
+        'codex-surface': '#141414',
+        'codex-card': '#1c1c1c',
+        'codex-border': '#2a2a2a',
+        'codex-border-light': 'rgba(255, 255, 255, 0.06)',
+        'codex-green': '#3366FF',
+        'codex-green-light': '#5C8AFF',
+        'codex-green-dark': '#1A4FE0',
+        'codex-green-subtle': 'rgba(51, 102, 255, 0.1)',
+        'codex-text': '#e2e8f0',
+        'codex-text-muted': '#94a3b8',
+        'codex-text-dim': '#64748b',
 
-        // Legacy aliases for backward compatibility
+        // Legacy aliases
+        'primary': '#3366FF',
+        'primary-dark': '#1A4FE0',
+        'primary-light': '#5C8AFF',
+        'accent-1': '#5C8AFF',
+        'accent-2': '#85A8FF',
+        'accent-3': '#ADC5FF',
+        'dark-bg': '#0a0a0a',
+        'dark-card': '#1c1c1c',
+        'surface': '#141414',
+        'card': '#1c1c1c',
+        'border': '#2a2a2a',
         'neon-blue': '#3366FF',
-        'neon-purple': '#7A33FF',
-        'dark-bg': '#0A0A0F',
-        'dark-card': '#181B26',
-      },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        glow: {
-          '0%': {
-            boxShadow: '0 0 20px rgba(51, 102, 255, 0.5), 0 0 40px rgba(51, 102, 255, 0.3)',
-          },
-          '100%': {
-            boxShadow: '0 0 30px rgba(51, 102, 255, 0.8), 0 0 60px rgba(51, 102, 255, 0.5)',
-          },
-        },
+        'neon-purple': '#1A4FE0',
+        'text-primary': '#e2e8f0',
+        'text-secondary': '#94a3b8',
       },
       boxShadow: {
-        'glow-sm': '0 0 10px rgba(51, 102, 255, 0.5)',
-        'glow': '0 0 20px rgba(51, 102, 255, 0.6)',
-        'glow-lg': '0 0 30px rgba(51, 102, 255, 0.8)',
-        'glow-accent': '0 0 20px rgba(51, 204, 255, 0.6)',
+        'subtle': '0 1px 3px rgba(0, 0, 0, 0.3)',
+        'card': '0 2px 8px rgba(0, 0, 0, 0.2)',
+        'card-hover': '0 4px 16px rgba(0, 0, 0, 0.3)',
+        'green-sm': '0 0 8px rgba(51, 102, 255, 0.15)',
+        'green': '0 0 16px rgba(51, 102, 255, 0.2)',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.3s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(4px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
     },
   },
