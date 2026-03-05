@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import MagicButton from '../components/MagicButton';
+import DotGrid from '../components/DotGrid';
 import { useLanguage } from '../context/LanguageContext';
 
 const Home = () => {
@@ -97,36 +98,20 @@ const Home = () => {
     <div className="min-h-screen relative z-10 noise-overlay">
       {/* ===== HERO SECTION ===== */}
       <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-        {/* Ambient gradient blobs */}
-        <div
-          className="ambient-blob ambient-blob-1"
-          style={{
-            width: '600px',
-            height: '600px',
-            top: '10%',
-            left: '-10%',
-            background: 'rgba(51, 102, 255, 0.05)',
-          }}
-        />
-        <div
-          className="ambient-blob ambient-blob-2"
-          style={{
-            width: '500px',
-            height: '500px',
-            bottom: '5%',
-            right: '-8%',
-            background: 'rgba(51, 102, 255, 0.04)',
-          }}
-        />
-
-        {/* Subtle dot grid pattern */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.03]"
-          style={{
-            backgroundImage: 'radial-gradient(circle, #e2e8f0 1px, transparent 1px)',
-            backgroundSize: '32px 32px',
-          }}
-        />
+        {/* Interactive DotGrid background */}
+        <div className="absolute inset-0 z-0">
+          <DotGrid
+            dotSize={5}
+            gap={15}
+            baseColor="#271E37"
+            activeColor="#0232f2"
+            proximity={120}
+            shockRadius={250}
+            shockStrength={5}
+            resistance={750}
+            returnDuration={1.5}
+          />
+        </div>
 
         {/* Hero content */}
         <div className="max-w-4xl mx-auto text-center pt-4 relative z-10">
