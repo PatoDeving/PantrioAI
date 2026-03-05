@@ -60,7 +60,7 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2 text-codex-text-dim text-sm">
               <li>{t('Email', 'Correo')}: <a href="mailto:hello@pantrio.dev" className="hover:text-codex-green transition-colors duration-150">hello@pantrio.dev</a></li>
-              <li>{t('Phone', 'Tel\u00e9fono')}: <a href="tel:+524462421428" className="hover:text-codex-green transition-colors duration-150">+52 (446) 242-1428</a></li>
+              <li>{t('Phone', 'Tel\u00e9fono')}: <a href="tel:+524462421328" className="hover:text-codex-green transition-colors duration-150">+52 (446) 242-1328</a></li>
               <li>{t('Location', 'Ubicaci\u00f3n')}: Interlomas, Edo. M\u00e9x.</li>
               <li>
                 <a

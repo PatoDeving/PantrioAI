@@ -47,11 +47,16 @@ module.exports = {
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-out',
+        'spotlight': 'spotlight 2s ease .75s 1 forwards',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0', transform: 'translateY(4px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        spotlight: {
+          '0%': { opacity: '0', transform: 'translate(-72%, -62%) scale(0.5)' },
+          '100%': { opacity: '1', transform: 'translate(-50%, -40%) scale(1)' },
         },
       },
     },

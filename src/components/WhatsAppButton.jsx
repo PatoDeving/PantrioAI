@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const WhatsAppButton = () => {
-  const phoneNumber = '524462421428';
+  const phoneNumber = '524462421328';
   const message = encodeURIComponent('Hola, me interesa saber más sobre los servicios de Pantrio AI.');
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 

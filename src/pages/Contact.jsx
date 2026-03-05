@@ -102,7 +102,7 @@ const Contact = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Phone */}
             <motion.a
-              href="tel:+524462421428"
+              href="tel:+524462421328"
               className="bg-codex-card border border-white/[0.06] rounded-xl p-6 text-center hover:border-codex-green/30 transition-colors duration-150"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -111,12 +111,12 @@ const Contact = () => {
             >
               <div className="text-2xl mb-3">{'\uD83D\uDCDE'}</div>
               <h3 className="text-sm font-semibold text-codex-text mb-1">{t('Call Us', 'Ll\u00e1manos')}</h3>
-              <p className="text-codex-green text-sm">+52 (446) 242-1428</p>
+              <p className="text-codex-green text-sm">+52 (446) 242-1328</p>
             </motion.a>
 
             {/* WhatsApp */}
             <motion.a
-              href="https://wa.me/524462421428"
+              href="https://wa.me/524462421328"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-codex-card border border-white/[0.06] rounded-xl p-6 text-center hover:border-[#25D366]/30 transition-colors duration-150"

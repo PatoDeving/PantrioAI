@@ -118,7 +118,7 @@ const Privacy = () => {
               </p>
               <ul className="list-disc list-inside mt-2 space-y-1">
                 <li>{t('Email', 'Correo')}: <a href="mailto:hello@pantrio.dev" className="text-codex-green hover:underline">hello@pantrio.dev</a></li>
-                <li>{t('Phone', 'Tel\u00e9fono')}: <a href="tel:+524462421428" className="text-codex-green hover:underline">+52 (446) 242-1428</a></li>
+                <li>{t('Phone', 'Tel\u00e9fono')}: <a href="tel:+524462421328" className="text-codex-green hover:underline">+52 (446) 242-1328</a></li>
               </ul>
             </section>
           </div>

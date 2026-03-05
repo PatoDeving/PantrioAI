@@ -1,9 +1,13 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
+import { SplineScene } from '../components/ui/splite';
+import { Spotlight } from '../components/ui/spotlight';
 
 const Portfolio = () => {
   const { t } = useLanguage();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   const projects = [
     {
@@ -11,9 +15,9 @@ const Portfolio = () => {
       category: t('AI & Web Development', 'IA y desarrollo web'),
       description: t(
         'Built an intelligent recommendation engine that increased sales by 45% for a major retail client.',
-        'Desarrollamos un motor de recomendaciones inteligente que increment\u00f3 las ventas en un 45\u00a0% para un cliente del sector retail.'
+        'Desarrollamos un motor de recomendaciones inteligente que incrementó las ventas en un 45\u00a0% para un cliente del sector retail.'
       ),
-      image: '\uD83D\uDED2',
+      icon: '🛒',
       tags: ['React', 'Python', 'TensorFlow', 'AWS'],
       metrics: {
         clients: { value: '10K+', label: t('Clients', 'Clientes') },
@@ -26,24 +30,24 @@ const Portfolio = () => {
       category: t('AI & NLP', 'IA y PLN'),
       description: t(
         'Customer service chatbot handling 80% of inquiries automatically with high satisfaction rates.',
-        'Chatbot de atenci\u00f3n al cliente que resuelve el 80\u00a0% de las consultas de forma autom\u00e1tica con altos \u00edndices de satisfacci\u00f3n.'
+        'Chatbot de atención al cliente que resuelve el 80\u00a0% de las consultas de forma automática con altos índices de satisfacción.'
       ),
-      image: '\uD83D\uDCAC',
+      icon: '💬',
       tags: ['Python', 'GPT-4', 'React', 'AWS'],
       metrics: {
         queries: { value: '100K+/mo', label: t('Queries', 'Consultas') },
-        satisfaction: { value: '92%', label: t('Satisfaction', 'Satisfacci\u00f3n') },
+        satisfaction: { value: '92%', label: t('Satisfaction', 'Satisfacción') },
         time: { value: t('1 month', '1 mes'), label: t('Time', 'Tiempo') },
       },
     },
     {
-      title: t('Cloud Migration Project', 'Proyecto de migraci\u00f3n a la nube'),
+      title: t('Cloud Migration Project', 'Proyecto de migración a la nube'),
       category: t('Cloud & DevOps', 'Nube y DevOps'),
       description: t(
         'Migrated legacy infrastructure to the cloud, reducing costs by 40% and improving scalability.',
         'Migramos infraestructura heredada a la nube, reduciendo costos en un 40\u00a0% y mejorando la escalabilidad.'
       ),
-      image: '\u2601\uFE0F',
+      icon: '☁️',
       tags: ['AWS', 'Kubernetes', 'Terraform', 'CI/CD'],
       metrics: {
         servers: { value: '200+', label: t('Servers', 'Servidores') },
@@ -52,28 +56,28 @@ const Portfolio = () => {
       },
     },
     {
-      title: t('UX/UI Design Platform', 'Plataforma de dise\u00f1o UX/UI'),
-      category: t('UI/UX Design', 'Dise\u00f1o UI/UX'),
+      title: t('UX/UI Design Platform', 'Plataforma de diseño UX/UI'),
+      category: t('UI/UX Design', 'Diseño UI/UX'),
       description: t(
         'A complete design system with beautiful, intuitive interfaces built for an optimal user experience.',
-        'Sistema de dise\u00f1o completo con interfaces intuitivas y atractivas, enfocado en una experiencia de usuario \u00f3ptima.'
+        'Sistema de diseño completo con interfaces intuitivas y atractivas, enfocado en una experiencia de usuario óptima.'
       ),
-      image: '\uD83C\uDFA8',
+      icon: '🎨',
       tags: ['Figma', 'Adobe XD', 'React', 'Tailwind CSS'],
       metrics: {
         screens: { value: '150+', label: t('Screens', 'Pantallas') },
-        rating: { value: '4.9/5', label: t('Rating', 'Calificaci\u00f3n') },
+        rating: { value: '4.9/5', label: t('Rating', 'Calificación') },
         time: { value: t('2 months', '2 meses'), label: t('Time', 'Tiempo') },
       },
     },
     {
-      title: t('Modern Web Application', 'Aplicaci\u00f3n web moderna'),
+      title: t('Modern Web Application', 'Aplicación web moderna'),
       category: t('Web Development', 'Desarrollo web'),
       description: t(
         'Responsive web application built with cutting-edge technologies, delivering exceptional performance.',
-        'Aplicaci\u00f3n web responsiva desarrollada con tecnolog\u00edas de vanguardia y un rendimiento excepcional.'
+        'Aplicación web responsiva desarrollada con tecnologías de vanguardia y un rendimiento excepcional.'
       ),
-      image: '\uD83D\uDCBB',
+      icon: '💻',
       tags: ['React', 'Next.js', 'Node.js', 'TypeScript'],
       metrics: {
         users: { value: '25K+', label: t('Users', 'Usuarios') },
@@ -83,12 +87,12 @@ const Portfolio = () => {
     },
     {
       title: t('AI Agent System', 'Sistema de agentes de IA'),
-      category: t('AI & Automation', 'IA y automatizaci\u00f3n'),
+      category: t('AI & Automation', 'IA y automatización'),
       description: t(
         'Autonomous AI agents handling complex workflows and decision-making processes with minimal human intervention.',
-        'Agentes de IA aut\u00f3nomos que gestionan flujos de trabajo complejos y procesos de toma de decisiones con m\u00ednima intervenci\u00f3n humana.'
+        'Agentes de IA autónomos que gestionan flujos de trabajo complejos y procesos de toma de decisiones con mínima intervención humana.'
       ),
-      image: '\uD83E\uDD16',
+      icon: '🤖',
       tags: ['Python', 'LangChain', 'GPT-4', 'Azure'],
       metrics: {
         tasks: { value: '10K+/day', label: t('Tasks', 'Tareas') },
@@ -98,12 +102,42 @@ const Portfolio = () => {
     },
   ];
 
+  const paginate = useCallback((newDirection) => {
+    setDirection(newDirection);
+    setCurrentIndex((prev) => {
+      if (newDirection === 1) return prev === projects.length - 1 ? 0 : prev + 1;
+      return prev === 0 ? projects.length - 1 : prev - 1;
+    });
+  }, [projects.length]);
+
+  const goToSlide = useCallback((index) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+  }, [currentIndex]);
+
+  const currentProject = projects[currentIndex];
+
+  const slideVariants = {
+    enter: (dir) => ({
+      x: dir > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (dir) => ({
+      x: dir > 0 ? -300 : 300,
+      opacity: 0,
+    }),
+  };
+
   return (
     <div className="min-h-screen pt-24 pb-12 px-4 relative z-10">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -114,62 +148,171 @@ const Portfolio = () => {
           <p className="text-lg text-codex-text-muted max-w-2xl mx-auto">
             {t(
               'Explore our successful projects and see how we\u2019ve helped businesses transform with technology.',
-              'Explora nuestros proyectos exitosos y descubre c\u00f3mo hemos ayudado a empresas a transformarse con tecnolog\u00eda.'
+              'Explora nuestros proyectos exitosos y descubre cómo hemos ayudado a empresas a transformarse con tecnología.'
             )}
           </p>
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              className="bg-codex-card border border-white/[0.06] rounded-xl overflow-hidden hover:border-codex-green/30 transition-colors duration-150"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.08, duration: 0.4 }}
-              whileHover={{ y: -4 }}
-            >
-              {/* Project Image/Icon */}
-              <div className="bg-codex-surface p-10 text-center border-b border-white/[0.06]">
-                <div className="text-6xl">{project.image}</div>
-              </div>
-
-              {/* Project Content */}
-              <div className="p-6">
-                <div className="text-xs text-codex-green font-medium mb-2 uppercase tracking-wider">{project.category}</div>
-                <h3 className="text-xl font-semibold mb-3 text-codex-text">{project.title}</h3>
-                <p className="text-codex-text-muted text-sm mb-4">{project.description}</p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="px-2.5 py-1 bg-codex-green/10 border border-codex-green/20 rounded-full text-xs text-codex-green"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Metrics */}
-                <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/[0.06]">
-                  {Object.values(project.metrics).map((metric, metricIndex) => (
-                    <div key={metricIndex} className="text-center">
-                      <div className="text-base font-semibold text-codex-green">{metric.value}</div>
-                      <div className="text-xs text-codex-text-dim">{metric.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Stats Section */}
+        {/* ===== HERO CARD WITH SPLINE 3D + CAROUSEL ===== */}
         <motion.div
-          className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+        >
+          <div className="w-full min-h-[520px] md:min-h-[480px] bg-black/[0.96] rounded-xl relative overflow-hidden border border-white/[0.06]">
+            <Spotlight
+              className="-top-40 left-0 md:left-60 md:-top-20"
+              fill="white"
+            />
+
+            <div className="flex flex-col md:flex-row h-full min-h-[520px] md:min-h-[480px]">
+              {/* Left content — Carousel text */}
+              <div className="flex-1 p-8 md:p-10 relative z-10 flex flex-col justify-center">
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.div
+                    key={currentIndex}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.35, ease: 'easeInOut' }}
+                  >
+                    {/* Category badge */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-codex-green/10 border border-codex-green/20 mb-4">
+                      <span className="text-sm">{currentProject.icon}</span>
+                      <span className="text-xs font-medium text-codex-green uppercase tracking-wider">
+                        {currentProject.category}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mb-4">
+                      {currentProject.title}
+                    </h2>
+
+                    {/* Description */}
+                    <p className="text-neutral-300 text-sm md:text-base mb-6 max-w-lg leading-relaxed">
+                      {currentProject.description}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {currentProject.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-neutral-300"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Metrics */}
+                    <div className="grid grid-cols-3 gap-4">
+                      {Object.values(currentProject.metrics).map((metric, i) => (
+                        <div key={i}>
+                          <div className="text-lg md:text-xl font-bold text-codex-green">{metric.value}</div>
+                          <div className="text-xs text-neutral-500">{metric.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Carousel controls */}
+                <div className="flex items-center gap-4 mt-8">
+                  {/* Prev button */}
+                  <button
+                    onClick={() => paginate(-1)}
+                    className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:border-codex-green/40 hover:bg-codex-green/10 transition-all duration-150"
+                    aria-label="Previous project"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+
+                  {/* Dots indicator */}
+                  <div className="flex gap-2">
+                    {projects.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          index === currentIndex
+                            ? 'w-6 bg-codex-green'
+                            : 'w-2 bg-white/20 hover:bg-white/40'
+                        }`}
+                        aria-label={`Go to project ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Next button */}
+                  <button
+                    onClick={() => paginate(1)}
+                    className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:border-codex-green/40 hover:bg-codex-green/10 transition-all duration-150"
+                    aria-label="Next project"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+
+                  {/* Counter */}
+                  <span className="text-xs text-neutral-500 ml-2">
+                    {currentIndex + 1} / {projects.length}
+                  </span>
+                </div>
+              </div>
+
+              {/* Right content — Spline 3D scene */}
+              <div className="flex-1 relative min-h-[250px] md:min-h-0">
+                <SplineScene
+                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                  className="w-full h-full"
+                />
+                {/* Gradient overlay to blend into left side */}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-black/60 via-transparent to-transparent" />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ===== PROJECT THUMBNAILS — quick access strip ===== */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            {projects.map((project, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`relative p-4 rounded-xl border text-center transition-all duration-200 ${
+                  index === currentIndex
+                    ? 'bg-codex-green/10 border-codex-green/40 shadow-green-sm'
+                    : 'bg-codex-card border-white/[0.06] hover:border-white/20'
+                }`}
+              >
+                <div className="text-2xl mb-2">{project.icon}</div>
+                <div className={`text-xs font-medium leading-tight ${
+                  index === currentIndex ? 'text-codex-green' : 'text-codex-text-muted'
+                }`}>
+                  {project.category.split(' & ')[0].split(' y ')[0]}
+                </div>
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ===== STATS SECTION ===== */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -177,7 +320,7 @@ const Portfolio = () => {
         >
           {[
             { number: '10+', label: t('Industries Served', 'Industrias atendidas') },
-            { number: '98%', label: t('Client Satisfaction', 'Satisfacci\u00f3n del cliente') },
+            { number: '98%', label: t('Client Satisfaction', 'Satisfacción del cliente') },
           ].map((stat, index) => (
             <motion.div
               key={index}
