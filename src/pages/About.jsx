@@ -89,13 +89,66 @@ const About = () => {
               <h2 className="text-2xl font-bold mb-4 text-codex-green">{t('Our Vision', 'Nuestra visi\u00f3n')}</h2>
               <p className="text-codex-text-muted leading-relaxed">
                 {t(
-                  'To become the leading AI platform for scalable automation, enabling companies worldwide to operate smarter, faster, and more efficiently through human-centered artificial intelligence.',
-                  'Convertirnos en la plataforma l\u00edder de IA para automatizaci\u00f3n escalable, permitiendo que empresas en todo el mundo operen de forma m\u00e1s inteligente, r\u00e1pida y eficiente mediante inteligencia artificial centrada en las personas.'
+                  'To become the leading AI agency for scalable automation, enabling companies worldwide to operate smarter, faster, and more efficiently through human-centered artificial intelligence.',
+                  'Convertirnos en la agencia l\u00edder de IA para automatizaci\u00f3n escalable, permitiendo que empresas en todo el mundo operen de forma m\u00e1s inteligente, r\u00e1pida y eficiente mediante inteligencia artificial centrada en las personas.'
                 )}
               </p>
             </div>
           </motion.div>
         </div>
+
+        {/* Nearshore Advantage Section */}
+        <motion.div
+          className="mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-2xl font-bold mb-4 text-center text-codex-text">
+            {t('Why a Mexico-Based AI Partner?', '\u00bfPor qu\u00e9 un socio de IA en M\u00e9xico?')}
+          </h2>
+          <p className="text-codex-text-muted text-sm text-center mb-10 max-w-2xl mx-auto">
+            {t(
+              'As a nearshore AI agency, we combine world-class technical talent with the advantages of proximity to the US and Canadian markets.',
+              'Como agencia nearshore de IA, combinamos talento t\u00e9cnico de primer nivel con las ventajas de la proximidad a los mercados de EE.\u00a0UU. y Canad\u00e1.'
+            )}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: '\u23F0',
+                title: t('Timezone Aligned', 'Misma zona horaria'),
+                desc: t('Same working hours as US Central/Eastern time. Real-time collaboration, no overnight delays.', 'Mismas horas laborales que el centro/este de EE.\u00a0UU. Colaboraci\u00f3n en tiempo real, sin retrasos.'),
+              },
+              {
+                icon: '\uD83D\uDCB0',
+                title: t('40-60% Cost Savings', '40-60% ahorro en costos'),
+                desc: t('Enterprise-grade AI solutions at a fraction of US agency rates, without compromising quality.', 'Soluciones de IA de nivel empresarial a una fracci\u00f3n del costo de agencias en EE.\u00a0UU., sin comprometer calidad.'),
+              },
+              {
+                icon: '\uD83C\uDF10',
+                title: t('Fully Bilingual', 'Completamente biling\u00fce'),
+                desc: t('Native English and Spanish. We bridge the communication gap for LATAM and North American markets.', 'Ingl\u00e9s y espa\u00f1ol nativos. Conectamos los mercados de LATAM y Norteam\u00e9rica sin barreras.'),
+              },
+              {
+                icon: '\u2708\uFE0F',
+                title: t('Travel Proximity', 'Proximidad geogr\u00e1fica'),
+                desc: t('A short flight away for in-person meetings when it matters. Mexico City is 3-4 hours from most US cities.', 'A pocas horas de vuelo para reuniones presenciales. CDMX est\u00e1 a 3-4\u00a0horas de la mayor\u00eda de ciudades de EE.\u00a0UU.'),
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="bg-codex-card border border-white/[0.06] rounded-xl p-6 text-center hover:border-codex-green/30 transition-colors duration-150"
+                whileHover={{ y: -4 }}
+              >
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-lg font-semibold mb-3 text-codex-text">{item.title}</h3>
+                <p className="text-codex-text-muted text-sm">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         <motion.div
           className="mb-20"

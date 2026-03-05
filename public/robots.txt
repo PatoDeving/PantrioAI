@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /hidden1
+Disallow: /api/
+
+Sitemap: https://www.pantrio.dev/sitemap.xml

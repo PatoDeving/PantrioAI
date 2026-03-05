@@ -168,7 +168,7 @@ const Chatbot = () => {
 
     try {
       const templateParams = {
-        to_email: 'patodinkmedia@gmail.com',
+        to_email: 'hello@pantrio.dev',
         inquiry_type: data.inquiryType,
         user_name: data.name,
         user_email: data.email,
@@ -199,7 +199,7 @@ const Chatbot = () => {
       setIsSending(false);
       setConversationState('error');
       setTimeout(() => {
-        addBotMessage("Sorry, there was an error sending your request. Please try again or contact us directly at patodinkmedia@gmail.com");
+        addBotMessage("Sorry, there was an error sending your request. Please try again or contact us directly at hello@pantrio.dev");
         setTimeout(() => {
           addBotMessage("Would you like to try again?", true);
         }, 1000);

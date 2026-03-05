@@ -154,9 +154,9 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}
             >
-              {t('Build smarter with', 'Construye m\u00e1s inteligente con')}{' '}
+              {t('AI Agents That', 'Agentes de IA que')}{' '}
               <span className="text-codex-green relative">
-                Pantrio AI
+                {t('Cut Your Costs by 40%', 'reducen tus costos un 40%')}
                 {/* Underline glow */}
                 <span
                   className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full"
@@ -175,8 +175,8 @@ const Home = () => {
               transition={{ delay: 0.2, duration: 0.6 }}
             >
               {t(
-                'We design and build AI agents, automation systems, and modern web applications that help businesses operate faster and scale efficiently.',
-                'Dise\u00f1amos y desarrollamos agentes de IA, sistemas de automatizaci\u00f3n y aplicaciones web modernas que ayudan a las empresas a operar m\u00e1s r\u00e1pido y escalar de manera eficiente.'
+                'We build AI agents, automation systems, and web apps that help businesses in e-commerce, fintech, healthcare, and logistics operate faster \u2014 from Mexico to the world.',
+                'Construimos agentes de IA, sistemas de automatizaci\u00f3n y aplicaciones web que ayudan a empresas de e-commerce, fintech, salud y log\u00edstica a operar m\u00e1s r\u00e1pido \u2014 desde M\u00e9xico para el mundo.'
               )}
             </motion.p>
 
@@ -186,8 +186,8 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              <MagicButton onClick={() => navigate('/contact')} size="lg">
-                {t('Start a Project', 'Iniciar un proyecto')}
+              <MagicButton onClick={() => window.open('https://calendly.com/hectorpatricio1518/30min', '_blank')} size="lg">
+                {t('Book a Free Discovery Call', 'Agenda una llamada gratis')}
               </MagicButton>
               <MagicButton variant="outline" size="lg" onClick={scrollToServices}>
                 {t('Explore Services', 'Explorar servicios')}
@@ -235,6 +235,45 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* ===== TRUSTED BY BAR ===== */}
+      <div className="relative z-10 py-12 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.p
+            className="text-xs uppercase tracking-widest text-codex-text-dim mb-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            {t('Trusted by companies in', 'Con la confianza de empresas en')}
+          </motion.p>
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 md:gap-8"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {[
+              { icon: '\uD83D\uDED2', label: 'E-Commerce' },
+              { icon: '\uD83C\uDFE6', label: 'Fintech' },
+              { icon: '\uD83C\uDFE5', label: t('Healthcare', 'Salud') },
+              { icon: '\uD83D\uDE9A', label: t('Logistics', 'Log\u00edstica') },
+              { icon: '\uD83C\uDFE0', label: t('Real Estate', 'Inmobiliario') },
+              { icon: '\uD83C\uDF93', label: t('Education', 'Educaci\u00f3n') },
+            ].map((industry, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.06] bg-codex-surface/50 text-codex-text-dim text-sm"
+              >
+                <span>{industry.icon}</span>
+                <span>{industry.label}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
 
@@ -425,17 +464,17 @@ const Home = () => {
               />
               <div className="relative z-10">
                 <h2 className="text-3xl font-bold mb-4 text-codex-text">
-                  {t('Ready to build something great?', '\u00bfListo para construir algo grandioso?')}
+                  {t('Ready to reduce costs with AI?', '\u00bfListo para reducir costos con IA?')}
                 </h2>
                 <p className="text-codex-text-muted mb-8 max-w-xl mx-auto">
                   {t(
-                    'Tell us about your project and we\u2019ll craft a solution that fits.',
-                    'Cu\u00e9ntanos sobre tu proyecto y crearemos una soluci\u00f3n a tu medida.'
+                    'Book a free 30-minute discovery call. We\u2019ll analyze your workflow and show you where AI can save you time and money.',
+                    'Agenda una llamada de descubrimiento gratis de 30\u00a0minutos. Analizaremos tu flujo de trabajo y te mostraremos d\u00f3nde la IA puede ahorrarte tiempo y dinero.'
                   )}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <MagicButton size="lg" onClick={() => navigate('/contact')}>
-                    {t('Start a Project', 'Iniciar un proyecto')}
+                  <MagicButton size="lg" onClick={() => window.open('https://calendly.com/hectorpatricio1518/30min', '_blank')}>
+                    {t('Book a Free Discovery Call', 'Agenda una llamada gratis')}
                   </MagicButton>
                   <MagicButton variant="outline" size="lg" onClick={() => navigate('/portfolio')}>
                     {t('View Our Work', 'Ver nuestro trabajo')}

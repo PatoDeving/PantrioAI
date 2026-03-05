@@ -4,11 +4,13 @@ import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
+import WhatsAppButton from './components/WhatsAppButton';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Hidden1 from './pages/Hidden1';
+import Privacy from './pages/Privacy';
 
 function AppContent() {
   const location = useLocation();
@@ -22,10 +24,12 @@ function AppContent() {
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/hidden1" element={<Hidden1 />} />
       </Routes>
       {!isHiddenPage && <Footer />}
       {!isHiddenPage && <Chatbot />}
+      {!isHiddenPage && <WhatsAppButton />}
     </div>
   );
 }
